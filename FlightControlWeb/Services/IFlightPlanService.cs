@@ -9,6 +9,6 @@ namespace FlightControlWeb.Services
     public interface IFlightPlanService
     {
         FlightPlan AddFlightPlan(FlightPlan item);
-        Dictionary<string, FlightPlan> GetFlightPlans();
+        FlightPlan GetFlightPlanById(string id);
     }
 }

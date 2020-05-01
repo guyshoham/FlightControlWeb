@@ -38,14 +38,14 @@ namespace FlightControlWeb.Controllers
         [Route("GetFlights")]
         public ActionResult<Dictionary<string, Flight>> GetFlights()
         {
-            var flight = _service.GetFlights();
+            var flights = _service.GetFlights();
 
-            if (flight.Count == 0)
+            if (flights.Count == 0)
             {
                 return NotFound();
             }
 
-            return flight;
+            return Ok(flights);
         }
 
         [HttpDelete]

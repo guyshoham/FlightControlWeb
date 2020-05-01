@@ -23,9 +23,17 @@ namespace FlightControlWeb.Services
             return item;
         }
 
-        public Dictionary<string, FlightPlan> GetFlightPlans()
+        public FlightPlan GetFlightPlanById(string id)
         {
-            return _flightPlans;
+            FlightPlan value;
+
+            if (!_flightPlans.TryGetValue(id, out value))
+            {
+                // the key isn't in the dictionary.
+                return null;
+            }
+
+            return value;
         }
     }
 }

@@ -21,7 +21,7 @@ namespace FlightControlWeb.Controllers
         }
 
         [HttpPost]
-        [Route("AddFlightPlan")]
+        [Route("FlightPlan")]
         public ActionResult<FlightPlan> AddFlightPlan(FlightPlan item)
         {
             var flightPlan = _service.AddFlightPlan(item);
@@ -35,17 +35,17 @@ namespace FlightControlWeb.Controllers
         }
 
         [HttpGet]
-        [Route("GetFlightPlans")]
-        public ActionResult<Dictionary<string, FlightPlan>> GetFlightPlans()
+        [Route("FlightPlan/{id}")]
+        public ActionResult<Dictionary<string, FlightPlan>> GetFlightPlanById(string id)
         {
-            var flightPlan = _service.GetFlightPlans();
+            var flightPlan = _service.GetFlightPlanById(id);
 
-            if (flightPlan.Count == 0)
+            if (flightPlan == null)
             {
                 return NotFound();
             }
 
-            return flightPlan;
+            return Ok(flightPlan);
         }
     }
 }
