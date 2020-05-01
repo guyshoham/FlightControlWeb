@@ -10,5 +10,6 @@ namespace FlightControlWeb.Services
     {
         FlightItems AddFlightItems(FlightItems items);
         Dictionary<string, FlightItems> GetFlightItems();
+        FlightItems DeleteFlightItems(string id);
     }
 }

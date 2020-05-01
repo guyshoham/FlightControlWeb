@@ -23,6 +23,21 @@ namespace FlightControlWeb.Services
             return items;
         }
 
+        public FlightItems DeleteFlightItems(string id)
+        {
+            FlightItems value;
+
+            if (!_flightItems.TryGetValue(id, out value))
+            {
+                // the key isn't in the dictionary.
+                return null; // or whatever you want to do
+            }
+
+            bool status = _flightItems.Remove(id);
+
+            return status ? value : null;
+        }
+
         public Dictionary<string, FlightItems> GetFlightItems()
         {
             return _flightItems;
