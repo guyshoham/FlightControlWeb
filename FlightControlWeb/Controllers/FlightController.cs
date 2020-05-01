@@ -45,5 +45,19 @@ namespace FlightControlWeb.Controllers
 
             return flightItems;
         }
+
+        [HttpDelete]
+        [Route("Flights/{id}")]
+        public ActionResult<Models.FlightItems> DeleteFlightItems(string id)
+        {
+            var flightItems = _services.DeleteFlightItems(id);
+
+            if (flightItems == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(flightItems);
+        }
     }
 }
