@@ -30,7 +30,7 @@ namespace FlightControlWeb.Services
             if (!_flights.TryGetValue(id, out value))
             {
                 // the key isn't in the dictionary.
-                return null; // or whatever you want to do
+                return null;
             }
 
             bool status = _flights.Remove(id);

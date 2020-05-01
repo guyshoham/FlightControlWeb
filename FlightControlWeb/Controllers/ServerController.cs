@@ -13,35 +13,53 @@ namespace FlightControlWeb.Controllers
     [ApiController]
     public class ServerController : ControllerBase
     {
-        private readonly IServerService _services;
+        private readonly IServerService _service;
 
         public ServerController(IServerService services)
         {
-            _services = services;
+            _service = services;
         }
 
         [HttpPost]
         [Route("servers")]
         public ActionResult<Server> AddServer(Server item)
         {
-            //TODO: implement
-            return NotFound();
+            var server = _service.AddServer(item);
+
+            if (server == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(server);
         }
 
         [HttpGet]
         [Route("servers")]
         public ActionResult<Dictionary<string, Server>> GetServers()
         {
-            //TODO: implement
-            return NotFound();
+            var server = _service.GetServers();
+
+            if (server.Count == 0)
+            {
+                return NotFound();
+            }
+
+            return server;
         }
 
         [HttpDelete]
         [Route("servers/{id}")]
         public ActionResult<Flight> DeleteServerById(string id)
         {
-            //TODO: implement
-            return NotFound();
+            var server = _service.DeleteServerById(id);
+
+            if (server == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(server);
         }
     }
 }
