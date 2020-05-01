@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using FlightControlWeb.Models;
+using FlightControlWeb.Services;
 
 namespace FlightControlWeb.Controllers
 {
@@ -11,39 +13,39 @@ namespace FlightControlWeb.Controllers
     [ApiController]
     public class FlightPlanController : ControllerBase
     {
-        private readonly Services.IFlightPlanServices _services;
+        private readonly IFlightPlanService _service;
 
-        public FlightPlanController(Services.IFlightPlanServices services)
+        public FlightPlanController(IFlightPlanService service)
         {
-            _services = services;
+            _service = service;
         }
 
         [HttpPost]
-        [Route("AddFlightPlanItems")]
-        public ActionResult<Models.FlightPlanItems> AddFlightPlanItems(Models.FlightPlanItems items)
+        [Route("AddFlightPlan")]
+        public ActionResult<FlightPlan> AddFlightPlan(FlightPlan item)
         {
-            var flightPlanItems = _services.AddFlightPlanItems(items);
+            var flightPlan = _service.AddFlightPlan(item);
 
-            if (flightPlanItems == null)
+            if (flightPlan == null)
             {
                 return NotFound();
             }
 
-            return Ok(flightPlanItems);
+            return Ok(flightPlan);
         }
 
         [HttpGet]
-        [Route("GetFlightPlanItems")]
-        public ActionResult<Dictionary<string, Models.FlightPlanItems>> GetFlightPlanItems()
+        [Route("GetFlightPlans")]
+        public ActionResult<Dictionary<string, FlightPlan>> GetFlightPlans()
         {
-            var flightPlanItems = _services.GetFlightPlanItems();
+            var flightPlan = _service.GetFlightPlans();
 
-            if (flightPlanItems.Count == 0)
+            if (flightPlan.Count == 0)
             {
                 return NotFound();
             }
 
-            return flightPlanItems;
+            return flightPlan;
         }
     }
 }

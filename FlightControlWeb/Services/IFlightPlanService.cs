@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace FlightControlWeb.Services
 {
-    public interface IFlightPlanServices
+    public interface IFlightPlanService
     {
-        FlightPlanItems AddFlightPlanItems(FlightPlanItems items);
-        Dictionary<string, FlightPlanItems> GetFlightPlanItems();
+        FlightPlan AddFlightPlan(FlightPlan item);
+        Dictionary<string, FlightPlan> GetFlightPlans();
     }
 }

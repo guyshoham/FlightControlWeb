@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 
 namespace FlightControlWeb.Models
 {
-    public class InitialLocationItems
+    public class Segment
     {
-        public double longtitude { get; set; }
+        public double longitude { get; set; }
 
         public double latitude { get; set; }
 
-        public DateTime date_time { get; set; }
+        public int timespan_seconds { get; set; }
     }
 }

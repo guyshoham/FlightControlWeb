@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FlightControlWeb.Services
 {
-    interface ServerServices : IServerServices
+    interface ServerService : IServerService
     {
     }
 }

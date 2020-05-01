@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using FlightControlWeb.Services;
 
 namespace FlightControlWeb
 {
@@ -26,7 +27,7 @@ namespace FlightControlWeb
         {
             services.AddControllers();
 
-            services.AddSingleton<Services.IFlightServices, Services.FlightServices>();
+            services.AddSingleton<IFlightService, FlightService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

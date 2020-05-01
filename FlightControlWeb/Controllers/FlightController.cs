@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using FlightControlWeb.Models;
+using FlightControlWeb.Services;
 
 namespace FlightControlWeb.Controllers
 {
@@ -11,53 +13,53 @@ namespace FlightControlWeb.Controllers
     [ApiController]
     public class FlightController : ControllerBase
     {
-        private readonly Services.IFlightServices _services;
+        private readonly IFlightService _service;
 
-        public FlightController(Services.IFlightServices services)
+        public FlightController(IFlightService service)
         {
-            _services = services;
+            _service = service;
         }
 
         [HttpPost]
-        [Route("AddFlightItems")]
-        public ActionResult<Models.FlightItems> AddFlightItems(Models.FlightItems items)
+        [Route("AddFlight")]
+        public ActionResult<Flight> AddFlight(Flight item)
         {
-            var flightItems = _services.AddFlightItems(items);
+            var flight = _service.AddFlight(item);
 
-            if (flightItems == null)
+            if (flight == null)
             {
                 return NotFound();
             }
 
-            return Ok(flightItems);
+            return Ok(flight);
         }
 
         [HttpGet]
-        [Route("GetFlightItems")]
-        public ActionResult<Dictionary<string, Models.FlightItems>> GetFlightItems()
+        [Route("GetFlights")]
+        public ActionResult<Dictionary<string, Flight>> GetFlights()
         {
-            var flightItems = _services.GetFlightItems();
+            var flight = _service.GetFlights();
 
-            if (flightItems.Count == 0)
+            if (flight.Count == 0)
             {
                 return NotFound();
             }
 
-            return flightItems;
+            return flight;
         }
 
         [HttpDelete]
         [Route("Flights/{id}")]
-        public ActionResult<Models.FlightItems> DeleteFlightItems(string id)
+        public ActionResult<Flight> DeleteFlightById(string id)
         {
-            var flightItems = _services.DeleteFlightItems(id);
+            var flight = _service.DeleteFlightById(id);
 
-            if (flightItems == null)
+            if (flight == null)
             {
                 return NotFound();
             }
 
-            return Ok(flightItems);
+            return Ok(flight);
         }
     }
 }
