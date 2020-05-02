@@ -17,11 +17,11 @@ namespace FlightControlWeb.Services
         public FlightPlan AddFlightPlan(FlightPlan item)
         {
             var rand = new Random();
-            string id = (Utils.LongRandom(100000, 9999999999, rand)).ToString();
+            string id = Utils.IDGenerator();
 
             while (_flightPlans.ContainsKey(id))
             {
-                id = (Utils.LongRandom(100000, 9999999999, rand)).ToString();
+                id = Utils.IDGenerator();
             }
 
             item.FlightPlanId = id;

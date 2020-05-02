@@ -16,11 +16,11 @@ namespace FlightControlWeb.Services
         public Server AddServer(Server item)
         {
             var rand = new Random();
-            string id = (Utils.LongRandom(100000, 9999999999, rand)).ToString();
+            string id = Utils.IDGenerator();
 
             while (_servers.ContainsKey(id))
             {
-                id = (Utils.LongRandom(100000, 9999999999, rand)).ToString();
+                id = Utils.IDGenerator();
             }
 
             item.ServerId = id;
