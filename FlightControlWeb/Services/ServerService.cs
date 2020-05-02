@@ -17,8 +17,15 @@ namespace FlightControlWeb.Services
 
         public Server AddServer(Server item)
         {
+            if (_servers.ContainsKey(item.ServerId))
+            {
+                Server s = new Server
+                {
+                    ServerId = "-1"
+                };
+                return s;
+            }
             _servers.Add(item.ServerId, item);
-
             return item;
         }
 

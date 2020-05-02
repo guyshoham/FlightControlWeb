@@ -31,6 +31,11 @@ namespace FlightControlWeb.Controllers
                 return NotFound();
             }
 
+            if (server.ServerId == "-1")
+            {
+                return Conflict();
+            }
+
             return Ok(server);
         }
 

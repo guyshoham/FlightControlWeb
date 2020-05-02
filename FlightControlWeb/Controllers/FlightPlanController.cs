@@ -31,6 +31,11 @@ namespace FlightControlWeb.Controllers
                 return NotFound();
             }
 
+            if (flightPlan.flight_id == "-1")
+            {
+                return Conflict();
+            }
+
             return Ok(flightPlan);
         }
 

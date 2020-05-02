@@ -18,8 +18,15 @@ namespace FlightControlWeb.Services
 
         public FlightPlan AddFlightPlan(FlightPlan item)
         {
+            if (_flightPlans.ContainsKey(item.flight_id))
+            {
+                FlightPlan f = new FlightPlan
+                {
+                    flight_id = "-1"
+                };
+                return f;
+            }
             _flightPlans.Add(item.flight_id, item);
-
             return item;
         }
 
