@@ -19,6 +19,7 @@ namespace FlightControlWeb.Services
         {
             if (_servers.ContainsKey(item.ServerId))
             {
+                //the key is already exist, return an object with id="-1"
                 Server s = new Server
                 {
                     ServerId = "-1"

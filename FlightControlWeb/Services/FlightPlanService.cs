@@ -20,6 +20,7 @@ namespace FlightControlWeb.Services
         {
             if (_flightPlans.ContainsKey(item.flight_id))
             {
+                //the key is already exist, return an object with id="-1"
                 FlightPlan f = new FlightPlan
                 {
                     flight_id = "-1"

@@ -33,6 +33,7 @@ namespace FlightControlWeb.Controllers
 
             if (server.ServerId == "-1")
             {
+                // the key is already exist, return response code 409: conflict
                 return Conflict();
             }
 
