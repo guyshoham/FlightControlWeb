@@ -1,4 +1,5 @@
 ﻿using FlightControlWeb.Models;
+using System;
 using System.Collections.Generic;
 
 namespace FlightControlWeb.Services
@@ -14,15 +15,15 @@ namespace FlightControlWeb.Services
 
         public Server AddServer(Server item)
         {
-            if (_servers.ContainsKey(item.ServerId))
+            var rand = new Random();
+            string id = (Utils.LongRandom(100000, 9999999999, rand)).ToString();
+
+            while (_servers.ContainsKey(id))
             {
-                //the key is already exist, return an object with id="-1"
-                Server s = new Server
-                {
-                    ServerId = "-1"
-                };
-                return s;
+                id = (Utils.LongRandom(100000, 9999999999, rand)).ToString();
             }
+
+            item.ServerId = id;
             _servers.Add(item.ServerId, item);
             return item;
         }

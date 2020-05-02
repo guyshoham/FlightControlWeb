@@ -30,12 +30,6 @@ namespace FlightControlWeb.Controllers
                 return NotFound();
             }
 
-            if (flightPlan.FlightId == "-1")
-            {
-                // the key is already exist, return response code 409: conflict
-                return Conflict();
-            }
-
             return Ok(flightPlan);
         }
 

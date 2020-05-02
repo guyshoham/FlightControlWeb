@@ -1,4 +1,5 @@
 ﻿using FlightControlWeb.Models;
+using System;
 using System.Collections.Generic;
 
 namespace FlightControlWeb.Services
@@ -15,18 +16,16 @@ namespace FlightControlWeb.Services
 
         public FlightPlan AddFlightPlan(FlightPlan item)
         {
+            var rand = new Random();
+            string id = (Utils.LongRandom(100000, 9999999999, rand)).ToString();
 
-
-            if (_flightPlans.ContainsKey(item.FlightId))
+            while (_flightPlans.ContainsKey(id))
             {
-                //the key is already exist, return an object with id="-1"
-                FlightPlan f = new FlightPlan
-                {
-                    FlightId = "-1"
-                };
-                return f;
+                id = (Utils.LongRandom(100000, 9999999999, rand)).ToString();
             }
-            _flightPlans.Add(item.FlightId, item);
+
+            item.FlightPlanId = id;
+            _flightPlans.Add(item.FlightPlanId, item);
             return item;
         }
 
@@ -41,5 +40,7 @@ namespace FlightControlWeb.Services
 
             return value;
         }
+
+
     }
 }
