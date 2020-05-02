@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using FlightControlWeb.Models;
+﻿using FlightControlWeb.Models;
 using FlightControlWeb.Services;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Text.Json;
 
 namespace FlightControlWeb.Controllers
 {
@@ -22,16 +20,17 @@ namespace FlightControlWeb.Controllers
 
         [HttpPost]
         [Route("FlightPlan")]
-        public ActionResult<FlightPlan> AddFlightPlan(FlightPlan item)
+        public ActionResult<FlightPlan> AddFlightPlan(JsonElement json)
         {
-            var flightPlan = _service.AddFlightPlan(item);
+            FlightPlan serializedJson = JsonConvert.DeserializeObject<FlightPlan>(json.ToString());
+            FlightPlan flightPlan = _service.AddFlightPlan(serializedJson);
 
             if (flightPlan == null)
             {
                 return NotFound();
             }
 
-            if (flightPlan.flight_id == "-1")
+            if (flightPlan.FlightId == "-1")
             {
                 // the key is already exist, return response code 409: conflict
                 return Conflict();

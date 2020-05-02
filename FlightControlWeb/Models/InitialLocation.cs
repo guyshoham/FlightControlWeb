@@ -1,16 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Newtonsoft.Json;
+using System;
 
 namespace FlightControlWeb.Models
 {
     public class InitialLocation
     {
-        public double longitude { get; set; }
+        [JsonProperty(PropertyName = "longitude")]
+        public double Longitude { get; set; }
 
-        public double latitude { get; set; }
+        [JsonProperty(PropertyName = "latitude")]
+        public double Latitude { get; set; }
 
-        public DateTime date_time { get; set; }
+        [JsonProperty(PropertyName = "date_time")]
+        public DateTime DateTime { get; set; }
     }
 }

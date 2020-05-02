@@ -1,18 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Newtonsoft.Json;
+using System;
 
 namespace FlightControlWeb.Models
 {
     public class Flight
     {
-        public string flight_id { get; set; }
-        public double longitude { get; set; }
-        public double latitude { get; set; }
-        public int passengers { get; set; }
-        public string company_name { get; set; }
-        public DateTime date_time { get; set; }
-        public bool is_external { get; set; }
+        [JsonProperty(PropertyName = "flight_id")]
+        public string FlightId { get; set; }
+
+        [JsonProperty(PropertyName = "longitude")]
+        public double Longitude { get; set; }
+
+        [JsonProperty(PropertyName = "latitude")]
+        public double Latitude { get; set; }
+
+        [JsonProperty(PropertyName = "passengers")]
+        public int Passengers { get; set; }
+
+        [JsonProperty(PropertyName = "company_name")]
+        public string CompanyName { get; set; }
+
+        [JsonProperty(PropertyName = "date_time")]
+        public DateTime DateTime { get; set; }
+
+        [JsonProperty(PropertyName = "is_external")]
+        public bool IsExternal { get; set; }
     }
 }

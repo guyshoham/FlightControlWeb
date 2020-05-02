@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using FlightControlWeb.Models;
+﻿using FlightControlWeb.Models;
 using FlightControlWeb.Services;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Text.Json;
 
 namespace FlightControlWeb.Controllers
 {
@@ -20,11 +18,13 @@ namespace FlightControlWeb.Controllers
             _service = service;
         }
 
+        // TODO: remove this method
         [HttpPost]
         [Route("AddFlight")]
-        public ActionResult<Flight> AddFlight(Flight item)
+        public ActionResult<Flight> AddFlight(JsonElement json)
         {
-            var flight = _service.AddFlight(item);
+            Flight serializedJson = JsonConvert.DeserializeObject<Flight>(json.ToString());
+            Flight flight = _service.AddFlight(serializedJson);
 
             if (flight == null)
             {
@@ -34,6 +34,7 @@ namespace FlightControlWeb.Controllers
             return Ok(flight);
         }
 
+        // TODO: remove this method
         [HttpGet]
         [Route("GetFlights")]
         public ActionResult<Dictionary<string, Flight>> GetFlights()

@@ -1,8 +1,5 @@
 ﻿using FlightControlWeb.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace FlightControlWeb.Services
 {
@@ -18,16 +15,15 @@ namespace FlightControlWeb.Services
 
         public Flight AddFlight(Flight item)
         {
-            _flights.Add(item.flight_id, item);
+            _flights.Add(item.FlightId, item);
 
             return item;
         }
 
         public Flight DeleteFlightById(string id)
         {
-            Flight value;
 
-            if (!_flights.TryGetValue(id, out value))
+            if (!_flights.TryGetValue(id, out Flight value))
             {
                 // the key isn't in the dictionary.
                 return null;

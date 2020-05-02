@@ -1,8 +1,5 @@
 ﻿using FlightControlWeb.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace FlightControlWeb.Services
 {
@@ -29,12 +26,10 @@ namespace FlightControlWeb.Services
             _servers.Add(item.ServerId, item);
             return item;
         }
-
         public Server DeleteServerById(string id)
         {
-            Server value;
 
-            if (!_servers.TryGetValue(id, out value))
+            if (!_servers.TryGetValue(id, out Server value))
             {
                 // the key isn't in the dictionary.
                 return null;
@@ -44,7 +39,6 @@ namespace FlightControlWeb.Services
 
             return status ? value : null;
         }
-
         public Dictionary<string, Server> GetServers()
         {
             return _servers;

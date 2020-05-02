@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using FlightControlWeb.Models;
 using FlightControlWeb.Services;
-using FlightControlWeb.Models;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Text.Json;
 
 namespace FlightControlWeb.Controllers
 {
@@ -22,9 +20,10 @@ namespace FlightControlWeb.Controllers
 
         [HttpPost]
         [Route("servers")]
-        public ActionResult<Server> AddServer(Server item)
+        public ActionResult<Server> AddServer(JsonElement json)
         {
-            var server = _service.AddServer(item);
+            Server serializedJson = JsonConvert.DeserializeObject<Server>(json.ToString());
+            Server server = _service.AddServer(serializedJson);
 
             if (server == null)
             {

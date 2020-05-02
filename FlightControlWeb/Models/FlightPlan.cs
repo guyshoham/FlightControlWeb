@@ -1,20 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Newtonsoft.Json;
+using System;
 
 namespace FlightControlWeb.Models
 {
     public class FlightPlan
     {
-        public string flight_id { get; set; }
+        [JsonProperty(PropertyName = "flight_id")]
+        public string FlightId { get; set; }
 
-        public int passengers { get; set; }
+        [JsonProperty(PropertyName = "passengers")]
+        public int Passengers { get; set; }
 
-        public string company_name { get; set; }
+        [JsonProperty(PropertyName = "company_name")]
+        public string CompanyName { get; set; }
 
-        public InitialLocation initial_location { get; set; }
+        [JsonProperty(PropertyName = "initial_location")]
+        public InitialLocation InitialLocation { get; set; }
 
-        public Segment[] segments { get; set; }
+        [JsonProperty(PropertyName = "segments")]
+        public Segment[] Segments { get; set; }
     }
 }

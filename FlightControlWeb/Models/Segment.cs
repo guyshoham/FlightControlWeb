@@ -1,16 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Newtonsoft.Json;
+using System;
 
 namespace FlightControlWeb.Models
 {
     public class Segment
     {
-        public double longitude { get; set; }
+        [JsonProperty(PropertyName = "longitude")]
+        public double Longitude { get; set; }
 
-        public double latitude { get; set; }
+        [JsonProperty(PropertyName = "latitude")]
+        public double Latitude { get; set; }
 
-        public int timespan_seconds { get; set; }
+        [JsonProperty(PropertyName = "timespan_seconds")]
+        public int TimespanSeconds { get; set; }
     }
 }
