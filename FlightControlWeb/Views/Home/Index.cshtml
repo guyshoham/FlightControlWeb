@@ -9,6 +9,12 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
+    <style>
+        #map{
+            height:400px;
+            width:80%;
+        }
+    </style>
 </head>
 
 <body>
@@ -17,10 +23,10 @@
     <script>
         function initMap() {
             var options = {
-                zoom: 8,
-                center: { lat: 32.08088, lng: 34.78057}
+                zoom: 15,
+                center: { lat: 32.130232, lng: 34.847036}
             }
-
+            var map = new google.maps.Map(document.getElementById('map'), options);
         }
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCQvxOxo-7iGC1bwz4SymYT0bRzOMKVvjs&callback=initMap"
