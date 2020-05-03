@@ -1,6 +1,7 @@
 using FlightControlWeb.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -24,6 +25,9 @@ namespace FlightControlWeb
             services.AddSingleton<IFlightService, FlightService>();
             services.AddSingleton<IFlightPlanService, FlightPlanService>();
             services.AddSingleton<IServerService, ServerService>();
+            services.AddMvc();
+            MvcOptions mvcOptions = new MvcOptions();
+            mvcOptions.EnableEndpointRouting = false;
 
         }
 
@@ -34,6 +38,10 @@ namespace FlightControlWeb
             {
                 app.UseDeveloperExceptionPage();
             }
+            
+
+          //  app.UseDefaultFiles();
+            app.UseStaticFiles();
 
             app.UseRouting();
 
@@ -41,7 +49,9 @@ namespace FlightControlWeb
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
