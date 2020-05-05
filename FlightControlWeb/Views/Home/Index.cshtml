@@ -10,29 +10,105 @@
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
     <style>
-        #map{
-            height:400px;
-            width:80%;
+        div.map{
+            position:absolute;
+            height:350px;
+            width:60%;
         }
+        div.myFlights {
+            height: 260px;
+            width: 20%;
+            position: absolute;
+            left: 63%;
+            border: 3px solid #73AD21;
+        }
+        div.externalFlights {
+            height: 260px;
+            width: 20%;
+            position: absolute;
+            left: 63%;
+            top:360px;
+            border: 3px solid #73AD21;
+        }
+        div.flightDetails {
+            height: 170px;
+            width: 60%;
+            position: absolute;
+            top:450px;
+            border: 3px solid #73AD21;
+        }
+        
     </style>
 </head>
 
 <body>
-    <h1>My Google Map</h1>
-    <div id="map"></div>
-    <script>
-        function initMap() {
-            var options = {
-                zoom: 15,
-                center: { lat: 32.130232, lng: 34.847036}
-            }
-            var map = new google.maps.Map(document.getElementById('map'), options);
-        }
-    </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCQvxOxo-7iGC1bwz4SymYT0bRzOMKVvjs&callback=initMap"
-            async defer>
+    <div class="container">
+        <h1>My Google Map</h1>
 
-    </script>
+        <div id="map" class="map"></div>
+        <script>
+            function initMap() {
+                //Map options
+                var options = {
+                    zoom: 15,
+                    center: { lat: 32.130232, lng: 34.847036 }
+                }
+                //New Map
+                var map = new google.maps.Map(document.getElementById('map'), options);
+                /*
+                //Add marker
+                var marker = new google.maps.Marker({
+                    position: { lat: 32.130232, lng: 34.847036 },
+                    map: map,
+                    icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
+                })
+
+                var infoWindow = new google.maps.InfoWindow({
+                    content: "<h1>Guy's house</h1>"
+                });
+                marker.addListener('click', function (){
+                    infoWindow.open(map, marker);
+                });*/
+
+
+                //Array of markers
+                var markers = [
+                    { lat: 32.130232, lng: 34.847036 },
+                    { lat: 32.131666, lng: 34.847036 },
+                    { lat: 32.132999, lng: 34.847036 }
+                ]
+
+                //Loop through markers
+                for (var i = 0; i < markers.length; i++) {
+                    addMarker(markers[i]);
+                }
+
+                //Add Marker Function
+                function addMarker(coords) {
+                    //Add marker
+                    var marker = new google.maps.Marker({
+                        position: coords,
+                        map: map,
+                        icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
+                    })
+                }
+            }
+        </script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCQvxOxo-7iGC1bwz4SymYT0bRzOMKVvjs&callback=initMap"
+                async defer>
+
+        </script>
+        <div id="myFlights" class="myFlights">
+            <h1>My Flights</h1>
+        </div>
+        <div id="externalFlights" class="externalFlights">
+            <h1>External Flights</h1>
+        </div>
+        <div id="flightDetails" class="flightDetails">
+            <h1>Flight Details</h1>
+        </div>
+    </div>
+   
 </body>
 
 </html>
