@@ -12,14 +12,12 @@ namespace FlightControlWeb.Services
         {
             _flights = new Dictionary<string, Flight>();
         }
-
         public Flight AddFlight(Flight item)
         {
             _flights.Add(item.FlightId, item);
 
             return item;
         }
-
         public Flight DeleteFlightById(string id)
         {
 
@@ -33,7 +31,6 @@ namespace FlightControlWeb.Services
 
             return status ? value : null;
         }
-
         public Dictionary<string, Flight> GetFlights()
         {
             return _flights;

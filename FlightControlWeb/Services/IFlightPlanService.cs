@@ -1,4 +1,6 @@
 ﻿using FlightControlWeb.Models;
+using System;
+using System.Collections.Generic;
 
 namespace FlightControlWeb.Services
 {
@@ -6,5 +8,7 @@ namespace FlightControlWeb.Services
     {
         FlightPlan AddFlightPlan(FlightPlan item);
         FlightPlan GetFlightPlanById(string id);
+        Dictionary<string, FlightPlan> GetAllFlightPlans();
+        List<Flight> GetAllFlightsRelativeToDate(Dictionary<string, FlightPlan> plans, DateTime dateInput);
     }
 }
