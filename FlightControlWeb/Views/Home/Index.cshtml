@@ -63,13 +63,14 @@
                     icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
                 })
 
-                var infoWindow = new google.maps.InfoWindow({
-                    content: "<h1>Guy's house</h1>"
-                });
-                marker.addListener('click', function (){
-                    infoWindow.open(map, marker);
-                });*/
+                */
 
+                var icon = {
+                    url: "https://cdn3.iconfinder.com/data/icons/map-markers-1/512/airplane-512.png", // url
+                    scaledSize: new google.maps.Size(24, 24), // scaled size
+                    origin: new google.maps.Point(0, 0), // origin
+                    anchor: new google.maps.Point(0, 0) // anchor
+                };
 
                 //Array of markers
                 var markers = [
@@ -89,8 +90,19 @@
                     var marker = new google.maps.Marker({
                         position: coords,
                         map: map,
-                        icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
+                        icon:icon
                     })
+                    var infoWindow = new google.maps.InfoWindow({
+                        content: "<h1>Guy's house</h1>"
+                    });
+                    marker.addListener('click', function () {
+                        var child = document.getElementById("currentFlight");
+                        var node = document.createTextNode("Guy's house");
+                        child.appendChild(node);
+                        var element = document.getElementById("flightDetails");
+                        element.appendChild(child);
+                    });
+                    
                 }
             }
         </script>
@@ -106,6 +118,7 @@
         </div>
         <div id="flightDetails" class="flightDetails">
             <h1>Flight Details</h1>
+            <p id="currentFlight"></p>
         </div>
     </div>
    
