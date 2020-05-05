@@ -2,6 +2,7 @@
 using FlightControlWeb.Services;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 
@@ -45,6 +46,31 @@ namespace FlightControlWeb.Controllers
             }
 
             return Ok(flightPlan);
+        }
+
+        [HttpGet]
+        [Route("FlightPlan/GetAll")]
+        public ActionResult<Dictionary<string, FlightPlan>> GetAllFlightPlans()
+        {
+            var plans = _service.GetAllFlightPlans();
+
+            if (plans == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(plans);
+        }
+
+        [HttpGet]
+        [Route("Flights")]
+        public ActionResult<List<Flight>> GetFlightsByTIme([FromQuery] DateTime relative_to)
+        {
+            Dictionary<string, FlightPlan> dict = _service.GetAllFlightPlans();
+
+            List<Flight> retVal = _service.GetAllFlightsRelativeToDate(dict, relative_to);
+
+            return Ok(retVal);
         }
     }
 }
