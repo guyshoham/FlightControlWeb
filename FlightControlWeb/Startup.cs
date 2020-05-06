@@ -23,7 +23,6 @@ namespace FlightControlWeb
             services.AddControllers();
 
             services.AddSingleton<IFlightService, FlightService>();
-            services.AddSingleton<IFlightPlanService, FlightPlanService>();
             services.AddSingleton<IServerService, ServerService>();
             services.AddMvc();
             MvcOptions mvcOptions = new MvcOptions();

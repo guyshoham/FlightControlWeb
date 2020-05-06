@@ -12,9 +12,9 @@ namespace FlightControlWeb.Controllers
     [ApiController]
     public class FlightPlanController : ControllerBase
     {
-        private readonly IFlightPlanService _service;
+        private readonly IFlightService _service;
 
-        public FlightPlanController(IFlightPlanService service)
+        public FlightPlanController(IFlightService service)
         {
             _service = service;
         }
@@ -48,29 +48,18 @@ namespace FlightControlWeb.Controllers
             return Ok(flightPlan);
         }
 
-        [HttpGet]
-        [Route("FlightPlan/GetAll")]
-        public ActionResult<Dictionary<string, FlightPlan>> GetAllFlightPlans()
+        [HttpDelete]
+        [Route("Flights/{id}")]
+        public ActionResult<Flight> DeleteFlightPlanById(string id)
         {
-            var plans = _service.GetAllFlightPlans();
+            FlightPlan flightPlan = _service.DeleteFlightPlanById(id);
 
-            if (plans == null)
+            if (flightPlan == null)
             {
                 return NotFound();
             }
 
-            return Ok(plans);
-        }
-
-        [HttpGet]
-        [Route("Flights")]
-        public ActionResult<List<Flight>> GetFlightsByTIme([FromQuery] DateTime relative_to)
-        {
-            Dictionary<string, FlightPlan> dict = _service.GetAllFlightPlans();
-
-            List<Flight> retVal = _service.GetAllFlightsRelativeToDate(dict, relative_to);
-
-            return Ok(retVal);
+            return Ok(flightPlan);
         }
     }
 }

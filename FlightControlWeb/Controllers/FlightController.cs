@@ -2,6 +2,7 @@
 using FlightControlWeb.Services;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 
@@ -17,50 +18,14 @@ namespace FlightControlWeb.Controllers
         {
             _service = service;
         }
-
-        // TODO: remove this method
-        [HttpPost]
-        [Route("AddFlight")]
-        public ActionResult<Flight> AddFlight(JsonElement json)
-        {
-            Flight serializedJson = JsonConvert.DeserializeObject<Flight>(json.ToString());
-            Flight flight = _service.AddFlight(serializedJson);
-
-            if (flight == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(flight);
-        }
-
-        // TODO: remove this method
+        
         [HttpGet]
-        [Route("GetFlights")]
-        public ActionResult<Dictionary<string, Flight>> GetFlights()
+        [Route("Flights")]
+        public ActionResult<List<Flight>> GetFlightsByTIme([FromQuery] DateTime relative_to)
         {
-            var flights = _service.GetFlights();
+            List<Flight> retVal = _service.GetAllFlightsRelativeToDate(relative_to);
 
-            if (flights.Count == 0)
-            {
-                return NotFound();
-            }
-
-            return Ok(flights);
-        }
-
-        [HttpDelete]
-        [Route("Flights/{id}")]
-        public ActionResult<Flight> DeleteFlightById(string id)
-        {
-            var flight = _service.DeleteFlightById(id);
-
-            if (flight == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(flight);
+            return Ok(retVal);
         }
     }
 }
