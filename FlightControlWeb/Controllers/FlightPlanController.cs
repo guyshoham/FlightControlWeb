@@ -21,7 +21,7 @@ namespace FlightControlWeb.Controllers
 
         [HttpPost]
         [Route("FlightPlan")]
-        public ActionResult<FlightPlan> AddFlightPlan(JsonElement json)
+        public ActionResult<FlightPlan> Post(JsonElement json)
         {
             FlightPlan serializedJson = JsonConvert.DeserializeObject<FlightPlan>(json.ToString());
             FlightPlan flightPlan = _service.AddFlightPlan(serializedJson);
@@ -36,7 +36,7 @@ namespace FlightControlWeb.Controllers
 
         [HttpGet]
         [Route("FlightPlan/{id}")]
-        public ActionResult<Dictionary<string, FlightPlan>> GetFlightPlanById(string id)
+        public ActionResult<Dictionary<string, FlightPlan>> Get(string id)
         {
             var flightPlan = _service.GetFlightPlanById(id);
 
@@ -50,7 +50,7 @@ namespace FlightControlWeb.Controllers
 
         [HttpDelete]
         [Route("Flights/{id}")]
-        public ActionResult<Flight> DeleteFlightPlanById(string id)
+        public ActionResult<Flight> Delete(string id)
         {
             FlightPlan flightPlan = _service.DeleteFlightPlanById(id);
 

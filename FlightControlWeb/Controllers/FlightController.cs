@@ -18,10 +18,10 @@ namespace FlightControlWeb.Controllers
         {
             _service = service;
         }
-        
+
         [HttpGet]
         [Route("Flights")]
-        public ActionResult<List<Flight>> GetFlightsByTIme([FromQuery] DateTime relative_to)
+        public ActionResult<List<Flight>> GetFlightsByTime([FromQuery] DateTime relative_to)
         {
             List<Flight> retVal = _service.GetAllFlightsRelativeToDate(relative_to);
 

@@ -7,36 +7,28 @@ namespace FlightControlWeb.Services
     public class FlightService : IFlightService
     {
 
-        private readonly Dictionary<string, Flight> _flights;
         private readonly Dictionary<string, FlightPlan> _flightPlans;
 
         public FlightService()
         {
-            _flights = new Dictionary<string, Flight>();
             _flightPlans = new Dictionary<string, FlightPlan>();
         }
-        public Flight AddFlight(Flight item)
+        public List<Flight> GetAllFlightsRelativeToDate(DateTime dateInput)
         {
-            _flights.Add(item.FlightId, item);
+            List<Flight> list = new List<Flight>();
 
-            return item;
-        }
-        public FlightPlan DeleteFlightPlanById(string id)
-        {
-
-            if (!_flightPlans.TryGetValue(id, out FlightPlan value))
+            // iterate over all plans in dictionary
+            foreach (FlightPlan plan in _flightPlans.Values)
             {
-                // the key isn't in the dictionary.
-                return null;
+                // get flight from this plan (if not fit, returns null)
+                Flight f = GetFlight(plan, dateInput);
+                if (f != null)
+                {
+                    list.Add(f);
+                }
             }
 
-            bool status = _flightPlans.Remove(id);
-
-            return status ? value : null;
-        }
-        public Dictionary<string, Flight> GetFlights()
-        {
-            return _flights;
+            return list;
         }
         public FlightPlan AddFlightPlan(FlightPlan item)
         {
@@ -63,23 +55,20 @@ namespace FlightControlWeb.Services
 
             return value;
         }
-        public List<Flight> GetAllFlightsRelativeToDate(DateTime dateInput)
+        public FlightPlan DeleteFlightPlanById(string id)
         {
-            List<Flight> list = new List<Flight>();
 
-            // iterate over all plans in dictionary
-            foreach (FlightPlan plan in _flightPlans.Values)
+            if (!_flightPlans.TryGetValue(id, out FlightPlan value))
             {
-                // get flight from this plan (if not fit, returns null)
-                Flight f = GetFlight(plan, dateInput);
-                if (f != null)
-                {
-                    list.Add(f);
-                }
+                // the key isn't in the dictionary.
+                return null;
             }
 
-            return list;
+            bool status = _flightPlans.Remove(id);
+
+            return status ? value : null;
         }
+
         public static Flight GetFlight(FlightPlan plan, DateTime dateInput)
         {
             DateTime departureTime = plan.InitialLocation.DateTime;
