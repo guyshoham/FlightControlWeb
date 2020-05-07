@@ -6,10 +6,12 @@
     <title>Index</title>
     <link rel="stylesheet" href="css/index.css" />
     <link rel="stylesheet" href="css/bootstrap.min.css" />
-    <script src="js/map.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery-3.4.1.slim.min.js"></script>
-    <script src="js/popper.min.js"></script>
+    <link rel="stylesheet" href="css/fontawesome.css">
+
+    <script src="js/map.js" defer ></script>
+    <script src="js/jquery-3.4.1.slim.min.js" defer ></script>
+    <script src="js/popper.min.js" defer ></script>
+    <script src="js/bootstrap.min.js" defer ></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCQvxOxo-7iGC1bwz4SymYT0bRzOMKVvjs&callback=initMap"
             async defer>
     </script>
@@ -23,25 +25,33 @@
 
         <!-- MyFlights Component -->
         <div id="myFlights" class="myFlights myBorder">
-            <h3>My Flights</h3>
-            <div class="list-group">
-                <a href="#" class="list-group-item list-group-item-action active">
-                    Flight 1
+            <h3 class="headerPosition">My Flights</h3>
+            <div class="list-group">                
+                <a class="list-group-item list-group-item-action" onclick="alert('X862-406 -> Details');">
+                    <i class="fas fa-plane"></i>
+                    X862-406
+                    <span style="float: right!important">
+                        <span class="close" onclick="alert('X862-406 -> Remove'); event.stopPropagation();">X</span>
+                    </span>
                 </a>
-                <a href="#" class="list-group-item list-group-item-action">Flight 2</a>
-                <a href="#" class="list-group-item list-group-item-action">Flight 3</a>
-                <a href="#" class="list-group-item list-group-item-action">Flight 4</a>
+                <a class="list-group-item list-group-item-action" onclick="alert('M695-307 -> Details');">
+                    <i class="fas fa-plane"></i>
+                    M695-307
+                    <span style="float: right!important">
+                        <span class="btn btn-xs btn-outline-danger" onclick="alert('M695-307 -> Remove'); event.stopPropagation();">X</span>
+                    </span>
+                </a>
             </div>
         </div>
 
         <!-- ExternalFlights Component -->
         <div id="externalFlights" class="externalFlights myBorder">
-            <h3>External Flights</h3>
+            <h3 class="headerPosition">External Flights</h3>
         </div>
 
         <!-- FlightDetails Component -->
         <div id="flightDetails" class="flightDetails myBorder">
-            <h3>Flight Details</h3>
+            <h3 class="headerPosition">Flight Details</h3>
             <p id="currentFlight"></p>
         </div>
 
