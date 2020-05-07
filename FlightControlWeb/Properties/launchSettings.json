@@ -9,18 +9,18 @@
     }
   },
   "profiles": {
-    "IIS Express": {
+    "FlightControlWeb": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "Home",
+      "launchUrl": "Index.html",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "FlightControlWeb": {
+    "CLI": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "Home",
+      "launchUrl": "Index.html",
       "applicationUrl": "http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

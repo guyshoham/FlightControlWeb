@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link rel="stylesheet" href="css/index.css" />
+    <script src="../js/map.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCQvxOxo-7iGC1bwz4SymYT0bRzOMKVvjs&callback=initMap"
+            async defer>
+    </script>
+</head>
+
+<body>
+    <div class="container">
+
+        <!-- Map Component -->
+        <div id="map" class="map"></div>
+
+        <!-- MyFlights Component -->
+        <div id="myFlights" class="myFlights">
+            <h1>My Flights</h1>
+        </div>
+
+        <!-- ExternalFlights Component -->
+        <div id="externalFlights" class="externalFlights">
+            <h1>External Flights</h1>
+        </div>
+
+        <!-- FlightDetails Component -->
+        <div id="flightDetails" class="flightDetails">
+            <h1>Flight Details</h1>
+            <p id="currentFlight"></p>
+        </div>
+
+    </div>
+
+</body>
+</html>
