@@ -74,24 +74,24 @@ function showDetails(flightId) {
 
 function showFlightMarker(flight) {
     let marker = { lat: flight.initialLocation.latitude, lng: flight.initialLocation.longitude };
-    addMarker(marker);
-
-
+    addMarker(flight);
 }
 
-function addMarker(coords) {
+function addMarker(flight) {
+    let coords = { lat: flight.initialLocation.latitude, lng: flight.initialLocation.longitude };
+
     //Add marker
     let marker = new google.maps.Marker({
         position: coords,
         map: map,
-        icon: icon
+        icon: icon,
+        title: flight.flightPlanId
     })
 
+    //add listener
     marker.addListener('click', function () {
-        let child = document.getElementById("currentFlight");
-        let node = document.createTextNode("Guy's house");
-        child.appendChild(node);
-        let element = document.getElementById("flightDetails");
-        element.appendChild(child);
+        let item = document.getElementById("currentFlight");
+        let content = flight.flightPlanId;
+        item.innerHTML = content;
     });
 }
