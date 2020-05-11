@@ -5,8 +5,8 @@
         "passengers": 69,
         "company_name": "JavaScriptAir",
         "initial_location": {
-            "longitude": 33.000,
-            "latitude": 31.000,
+            "longitude": 34.847036,
+            "latitude": 32.130232,
             "date_time": "2020-12-26T20:00:00Z"
         },
         "segments": [
@@ -25,6 +25,7 @@
     fetch("/api/FlightPlan", postOptions)
         .then(response => response.json())
         .then(appendItem) //add flight to list
+        .then(showFlightMarker)
         .catch(error => console.log(error))
 
 
@@ -63,8 +64,34 @@ function appendItem(flight) {
 
     //add item to list
     flights.append(item);
+
+    return flight;
 }
 
 function showDetails(flightId) {
     alert(flightId + "-> Details");
+}
+
+function showFlightMarker(flight) {
+    let marker = { lat: flight.initialLocation.latitude, lng: flight.initialLocation.longitude };
+    addMarker(marker);
+
+
+}
+
+function addMarker(coords) {
+    //Add marker
+    let marker = new google.maps.Marker({
+        position: coords,
+        map: map,
+        icon: icon
+    })
+
+    marker.addListener('click', function () {
+        let child = document.getElementById("currentFlight");
+        let node = document.createTextNode("Guy's house");
+        child.appendChild(node);
+        let element = document.getElementById("flightDetails");
+        element.appendChild(child);
+    });
 }
