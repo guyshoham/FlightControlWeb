@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/fontawesome.css">
 
     <script src="js/map.js" defer></script>
+    <script src="js/flightBuilder.js" defer></script>
     <script src="js/jquery-3.4.1.slim.min.js" defer></script>
     <script src="js/popper.min.js" defer></script>
     <script src="js/bootstrap.min.js" defer></script>
@@ -26,22 +27,13 @@
         <!-- MyFlights Component -->
         <div id="myFlights" class="myFlights myBorder">
             <h3 class="headerPosition">My Flights</h3>
-            <div class="list-group">
-                <a class="list-group-item list-group-item-action" onclick="alert('X862-406 -> Details');">
-                    <i class="fas fa-plane"></i>
-                    X862-406 <br />
-                    <i class="fas fa-user-tie"></i>
-                    Swiss-Air
-                    <span class="btn-position-right">
-                        <span class="close" onclick="alert('X862-406 -> Remove'); event.stopPropagation();">X</span>
-                    </span>
-                </a>
+            <div id="flight_list" class="list-group">                
                 <a class="list-group-item list-group-item-action" onclick="alert('M695-307 -> Details');">
                     <i class="fas fa-plane"></i>
                     M695-307
                     <br />
                     <i class="fas fa-user-tie"></i>
-                    Virgin-America
+                    Virgin America
                     <div class="btn btn-xs btn-outline-danger btn-position-right" onclick="alert('M695-307 -> Remove'); event.stopPropagation();">X</div>
                 </a>
             </div>
@@ -50,6 +42,7 @@
         <!-- ExternalFlights Component -->
         <div id="externalFlights" class="externalFlights myBorder">
             <h3 class="headerPosition">External Flights</h3>
+            <button type="button" class="btn btn-primary" onclick="AddFlightToList()">Add Flight</button>
         </div>
 
         <!-- FlightDetails Component -->
