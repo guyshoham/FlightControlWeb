@@ -54,7 +54,7 @@ function appendItem(flight) {
                     <i class="fas fa-user-tie"></i>
                     ${flight.companyName}
                     </i>
-                    <div class="btn btn-xs btn-outline-danger btn-position-right" onclick="alert(' ${item.id} -> Remove'); event.stopPropagation();">
+                    <div class="btn btn-xs btn-outline-danger btn-position-right" onclick="removeFlight('${item.id}'); event.stopPropagation();">
                     X
                     </div>`;
 
@@ -68,4 +68,18 @@ function appendItem(flight) {
 
 function showDetails(flightId) {
     alert(flightId + "-> Details");
+}
+
+function removeFlight(flightId) {
+
+    //create DELETE request
+    let deleteOptions = {
+        "method": "DELETE",
+    };
+
+    //send DELETE request
+    fetch("/api/Flights/" + flightId, deleteOptions)
+        .then(response => response.json())
+        .then(document.getElementById(flightId).remove())
+        .catch(error => console.log(error))
 }
