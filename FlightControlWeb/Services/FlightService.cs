@@ -40,8 +40,8 @@ namespace FlightControlWeb.Services
                 id = Utils.IDGenerator();
             }
 
-            item.FlightPlanId = id;
-            _flightPlans.Add(item.FlightPlanId, item);
+            item.FlightId = id;
+            _flightPlans.Add(item.FlightId, item);
             return item;
         }
         public FlightPlan GetFlightPlanById(string id)
@@ -99,7 +99,7 @@ namespace FlightControlWeb.Services
                     // create Flight object
                     Flight flight = new Flight
                     {
-                        FlightId = plan.FlightPlanId,
+                        FlightId = plan.FlightId,
                         Longitude = retVal.Longitude,
                         Latitude = retVal.Latitude,
                         Passengers = plan.Passengers,

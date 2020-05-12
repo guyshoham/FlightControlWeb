@@ -11,8 +11,8 @@
         },
         "segments": [
             {
-                "longitude": 33.500,
-                "latitude": 31.500,
+                "longitude": 34.847037,
+                "latitude": 32.130233,
                 "timespan_seconds": 600
             }
         ]
@@ -24,8 +24,6 @@
     //send POST request
     fetch("/api/FlightPlan", postOptions)
         .then(response => response.json())
-        .then(appendItem) //add flight to list
-        .then(showFlightMarker)
         .catch(error => console.log(error))
 
 
@@ -44,19 +42,19 @@ function preparePost(flight) {
 
 function appendItem(flight) {
     let flights = document.getElementById("flight_list");
-    let item = document.createElement("a");
-    item.id = flight.flightPlanId;
+    let item = document.createElement("li");
+    item.id = flight.flightId;
     item.className = "list-group-item list-group-item-action";
     item.onclick = function () { showDetails(item.id) };
 
     //generate the inner content of the item
     const content = `<i class="fas fa-plane"></i>
-                    ${flight.flightPlanId}
+                    ${item.id}
                     <br>
                     <i class="fas fa-user-tie"></i>
                     ${flight.companyName}
                     </i>
-                    <div class="btn btn-xs btn-outline-danger btn-position-right" onclick="alert(' ${flight.flightPlanId} -> Remove'); event.stopPropagation();">
+                    <div class="btn btn-xs btn-outline-danger btn-position-right" onclick="alert(' ${item.id} -> Remove'); event.stopPropagation();">
                     X
                     </div>`;
 
@@ -70,28 +68,4 @@ function appendItem(flight) {
 
 function showDetails(flightId) {
     alert(flightId + "-> Details");
-}
-
-function showFlightMarker(flight) {
-    let marker = { lat: flight.initialLocation.latitude, lng: flight.initialLocation.longitude };
-    addMarker(flight);
-}
-
-function addMarker(flight) {
-    let coords = { lat: flight.initialLocation.latitude, lng: flight.initialLocation.longitude };
-
-    //Add marker
-    let marker = new google.maps.Marker({
-        position: coords,
-        map: map,
-        icon: icon,
-        title: flight.flightPlanId
-    })
-
-    //add listener
-    marker.addListener('click', function () {
-        let item = document.getElementById("currentFlight");
-        let content = flight.flightPlanId;
-        item.innerHTML = content;
-    });
 }

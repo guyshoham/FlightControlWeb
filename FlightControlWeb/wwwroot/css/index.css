@@ -42,6 +42,8 @@ div.flightDetails {
 .list-group {
     margin-left: 5px;
     margin-right: 5px;
+    height: 85%;
+    overflow-y: scroll;
 }
 
 .btn-position-right {

@@ -5,7 +5,7 @@ namespace FlightControlWeb.Models
     public class FlightPlan
     {
         [JsonProperty(PropertyName = "flight_id")]
-        public string FlightPlanId { get; set; }
+        public string FlightId { get; set; }
 
         [JsonProperty(PropertyName = "passengers")]
         public int Passengers { get; set; }
