@@ -1,5 +1,5 @@
 ﻿
-setInterval(fetchFlight, 5000);
+setInterval(fetchFlight, 7000);
 
 
 function fetchFlight() {
@@ -19,8 +19,11 @@ function addFlightsArrayToFlightList(array) {
     deleteMarkers();
 
     for (var i = 0; i < array.length; i++) {
-        appendItem(array[i]);
-        addMarker(array[i]);
+        marker = array[i];
+
+        appendItem(marker);
+        addMarker(marker);
+        marker.addListener('click', toggleBounce);
     }
 }
 

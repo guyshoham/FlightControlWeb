@@ -16,13 +16,13 @@ function initMap() {
     //TODO: should save icon in wwwroot folder
     icon = {
         url: "https://cdn3.iconfinder.com/data/icons/map-markers-1/512/airplane-512.png", // url
-        scaledSize: new google.maps.Size(24, 24), // scaled size
+        scaledSize: new google.maps.Size(36, 36), // scaled size
         origin: new google.maps.Point(0, 0), // origin
         anchor: new google.maps.Point(0, 0) // anchor
     };
 }
 
-//create flight marker and add it to map
+// Create flight marker and add it to map
 function addMarker(flight) {
     let coords = { lat: flight.latitude, lng: flight.longitude };
 
@@ -59,4 +59,14 @@ function clearMarkers() {
 function deleteMarkers() {
     clearMarkers();
     markers = [];
+}
+
+// Marker bounce animation
+function toggleBounce() {
+    if (marker.getAnimation() !== null) {
+        marker.setAnimation(null);
+    } else {
+        marker.setAnimation(google.maps.Animation.BOUNCE);
+        setTimeout(function () { marker.setAnimation(null); }, 750);
+    }
 }
