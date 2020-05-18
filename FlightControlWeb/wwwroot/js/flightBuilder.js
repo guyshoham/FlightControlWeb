@@ -72,7 +72,10 @@ function appendItem(flight) {
 }
 
 function showDetails(flightId) {
-    alert(flightId + "-> Details");
+    fetchFlightPlanById(flightId);
+    let listItem = document.getElementById(flightId);
+    listItem.className = "list-group-item list-group-item-action list-group-item active";
+
 }
 
 function removeFlight(flightId) {
