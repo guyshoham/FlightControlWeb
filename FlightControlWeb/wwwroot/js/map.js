@@ -37,9 +37,7 @@ function addMarker(flight) {
 
     //add listener
     marker.addListener('click', function () {
-        let item = document.getElementById("currentFlight");
-        let content = flight.flightId;
-        item.innerHTML = content;
+        fetchFlightPlanById(marker.title);
     });
 }
 

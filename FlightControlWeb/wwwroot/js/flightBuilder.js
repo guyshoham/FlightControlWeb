@@ -14,6 +14,11 @@
                 "longitude": 34.847037,
                 "latitude": 32.130233,
                 "timespan_seconds": 600
+            },
+            {
+                "longitude": 34.847038,
+                "latitude": 32.130234,
+                "timespan_seconds": 300
             }
         ]
     };
