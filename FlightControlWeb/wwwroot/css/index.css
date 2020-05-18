@@ -1,4 +1,4 @@
-﻿div.map {
+div.map {
     position: absolute;
     left: 2%;
     top: 5%;
@@ -19,16 +19,35 @@ div.externalFlights {
     width: 35%;
     position: absolute;
     right: 2%;
+   
     top: 60%;
 }
 
 div.flightDetails {
     height: 25%;
-    width: 60%;
+    width: 42%;
     position: absolute;
     top: 70%;
-    left: 2%;
+    left: 20%;
 }
+
+div.dropZone {
+    height: 25%;
+    width: 17%;
+    border: 2px dashed #ccc;
+    color: #ccc;
+    text-align: center;
+    line-height:8;
+    position: absolute;
+    top: 70%;
+    left: 2%
+}
+
+div.dropZone.dragOver {
+    border-color:#000;
+    color:#000;
+}
+
 
 .myBorder {
     border: 2px solid;
