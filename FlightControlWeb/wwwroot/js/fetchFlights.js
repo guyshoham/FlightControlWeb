@@ -1,5 +1,5 @@
 ﻿
-setInterval(fetchFlight, 7000);
+setInterval(fetchFlight, 5000);
 
 
 function fetchFlight() {
@@ -11,6 +11,18 @@ function fetchFlight() {
     fetch("http://localhost:51271/api/Flights?relative_to=2020-12-26T18:05:00Z", getOptions)
         .then(response => response.json())
         .then(data => addFlightsArrayToFlightList(data))
+        .catch(error => showSnackbar(error))
+}
+
+function fetchFlightPlanById(id) {
+    let getOptions = {
+        "method": "GET"
+    }
+
+    //send GET request
+    fetch("http://localhost:51271/api/FlightPlan/" + id, getOptions)
+        .then(response => response.json())
+        .then(data => showFlightDetails(data))
         .catch(error => showSnackbar(error))
 }
 
@@ -45,5 +57,33 @@ function showSnackbar(error) {
 
     // After 3 seconds, remove the show class from DIV
     setTimeout(function () { x.className = x.className.replace("show", ""); }, 7000);
+}
+
+function showFlightDetails(flightPlan) {
+    let title = document.getElementById("flightCardTitle");
+    let company = document.getElementById("flightCardCompany");
+    let passengers = document.getElementById("flightCardPassengers");
+    let startPoint = document.getElementById("flightCardStartPoint");
+    let endPoint = document.getElementById("flightCardEndPoint");
+
+    if (flightPlan === null) {
+        title.textContent = "";
+        company.textContent = "";
+        passengers.textContent = "";
+        startPoint.textContent = "";
+        endPoint.textContent = "";
+    } else {
+        let segmentsLength = flightPlan.segments.length;
+        title.textContent = "Flight ID: " + flightPlan.flightId;
+        company.textContent = "Company: " + flightPlan.companyName;
+        passengers.textContent = "Passengers: " + flightPlan.passengers;
+        startPoint.textContent = "Start: " +
+            flightPlan.initialLocation.latitude + "," +
+            flightPlan.initialLocation.longitude;
+
+        endPoint.textContent = "End: " +
+            flightPlan.segments[segmentsLength - 1].latitude + "," +
+            flightPlan.segments[segmentsLength - 1].longitude;
+    }
 }
 

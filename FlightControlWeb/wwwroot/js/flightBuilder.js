@@ -1,4 +1,6 @@
-﻿function AddFlightToList() {
+﻿var selectedFlightPlanId;
+
+function AddFlightToList() {
 
     //create demo flight object
     let flight = {
@@ -14,6 +16,11 @@
                 "longitude": 34.847037,
                 "latitude": 32.130233,
                 "timespan_seconds": 600
+            },
+            {
+                "longitude": 34.847038,
+                "latitude": 32.130234,
+                "timespan_seconds": 300
             }
         ]
     };
@@ -45,7 +52,16 @@ function appendItem(flight) {
     let item = document.createElement("li");
     item.id = flight.flightId;
     item.className = "list-group-item list-group-item-action";
-    item.onclick = function () { showDetails(item.id) };
+    item.onclick = function () {
+        if ((selectedFlightPlanId !== undefined) && (selectedFlightPlanId !== null)) {
+            let listItem = document.getElementById(selectedFlightPlanId);
+            listItem.classList.remove("active");
+            let item_btn = document.getElementById(selectedFlightPlanId + "_delete_btn");
+            item_btn.classList.replace("btn-danger", "btn-outline-danger");
+        }
+        selectedFlightPlanId = item.id;
+        showDetails()
+    };
 
     //generate the inner content of the item
     const content = `<i class="fas fa-plane"></i>
@@ -54,23 +70,41 @@ function appendItem(flight) {
                     <i class="fas fa-user-tie"></i>
                     ${flight.companyName}
                     </i>
-                    <div class="btn btn-xs btn-outline-danger btn-position-right" onclick="removeFlight('${item.id}'); event.stopPropagation();">
+                    <Button id='${item.id}_delete_btn' class="btn btn-xs btn-outline-danger btn-position-right" style="z-index: 3;" onclick="removeFlight('${item.id}'); event.stopPropagation();">
                     X
-                    </div>`;
+                    </Button>`;
 
     item.innerHTML = content;
 
     //add item to list
     flights.append(item);
 
+    if (item.id === selectedFlightPlanId) {
+        item.classList.add("active");
+        let item_btn = document.getElementById(selectedFlightPlanId + "_delete_btn");
+        item_btn.classList.replace("btn-outline-danger", "btn-danger");
+    }
+
     return flight;
 }
 
-function showDetails(flightId) {
-    alert(flightId + "-> Details");
+function showDetails() {
+    fetchFlightPlanById(selectedFlightPlanId);
+    let listItem = document.getElementById(selectedFlightPlanId);
+    listItem.classList.add("active");
+    let item_btn = document.getElementById(selectedFlightPlanId + "_delete_btn");
+    item_btn.classList.replace("btn-outline-danger", "btn-danger");
+
 }
 
 function removeFlight(flightId) {
+
+    if (flightId === selectedFlightPlanId) {
+        selectedFlightPlanId = null;
+        showFlightDetails(null);
+    }
+
+    removeMarkerById(flightId);
 
     //create DELETE request
     let deleteOptions = {

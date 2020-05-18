@@ -37,9 +37,13 @@ function addMarker(flight) {
 
     //add listener
     marker.addListener('click', function () {
-        let item = document.getElementById("currentFlight");
-        let content = flight.flightId;
-        item.innerHTML = content;
+        selectedFlightPlanId = marker.title;
+        fetchFlightPlanById(selectedFlightPlanId);
+
+        let item = document.getElementById(selectedFlightPlanId);
+        item.classList.add("active");
+        let item_btn = document.getElementById(selectedFlightPlanId + "_delete_btn");
+        item_btn.classList.replace("btn-outline-danger", "btn-danger");
     });
 }
 
@@ -68,5 +72,14 @@ function toggleBounce() {
     } else {
         marker.setAnimation(google.maps.Animation.BOUNCE);
         setTimeout(function () { marker.setAnimation(null); }, 750);
+    }
+}
+
+function removeMarkerById(id) {
+    for (var i = 0; i < markers.length; i++) {
+        if (markers[i].title === id) {
+            markers[i].setMap(null);
+            markers.splice(i, 1); i--;
+        }
     }
 }
