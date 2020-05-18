@@ -1,5 +1,5 @@
 ﻿
-setInterval(fetchFlight, 7000);
+setInterval(fetchFlight, 5000);
 
 
 function fetchFlight() {

@@ -33,8 +33,8 @@
         <!-- ExternalFlights Component -->
         <div id="externalFlights" class="externalFlights myBorder">
             <h4 class="headerPosition">External Flights</h4>
-            <button type="button" class="btn btn-primary" onclick="AddFlightToList()">Add Flight</button>
-            <button onclick="showSnackbar()">Show Snackbar</button>
+            <button type="button" class="btn btn-primary" onclick="AddFlightToList()" style="margin-left: 5px;">Add Flight (POST)</button>
+            <button type="button" class="btn btn-danger" onclick="showSnackbar()">Error Message Example</button>
         </div>
 
         <!-- FlightDetails Component -->
@@ -42,14 +42,14 @@
             <h4 class="headerPosition">Flight Details</h4>
             <div id="flightCard" class="card" style="width: 90%; height: 70%; margin-left: 5px; margin-right: 5px; border: 0px;">
                 <div class="card-body">
-                    <h5 id="flightCardTitle" class="card-title">Flight ID</h5>
+                    <h5 id="flightCardTitle" class="card-title"></h5>
                     <div class="flightCardBio">
-                        <h6 id="flightCardCompany" class="card-subtitle mb-2 text-muted">Air Company</h6>
-                        <h6 id="flightCardPassengers" class="card-subtitle mb-2 text-muted">No. Passengers</h6>
+                        <h6 id="flightCardCompany" class="card-subtitle mb-2 text-muted"></h6>
+                        <h6 id="flightCardPassengers" class="card-subtitle mb-2 text-muted"></h6>
                     </div>
                     <div class="flightCardLocationData">
-                        <h6 id="flightCardStartPoint" class="card-subtitle mb-2 text-muted">Start</h6>
-                        <h6 id="flightCardEndPoint" class="card-subtitle mb-2 text-muted">End</h6>
+                        <h6 id="flightCardStartPoint" class="card-subtitle mb-2 text-muted"></h6>
+                        <h6 id="flightCardEndPoint" class="card-subtitle mb-2 text-muted"></h6>
                     </div>
                 </div>
             </div>
