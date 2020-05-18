@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -50,6 +50,38 @@
         <!-- Snackbar -->
         <div id="snackbar">message text</div>
 
+        <!--DropZone Component-->
+        <div id="dropZone" class="dropZone">Drop file here</div>
+        <script>
+            (function () {
+                var dropZone = document.getElementById('dropZone');
+
+                //files var is a list Of files - comes form drag and drop upload
+                //need to complete handling files.
+                var upload = function (files) {
+                   
+                 
+                }
+
+                dropZone.ondrop = function (e) {
+                    //prevent open file in browser - deafault drag behavior
+                    e.preventDefault();
+                    this.className = 'dropZone';
+                    upload(e.dataTransfer.files);
+                }
+
+                //mouse enter
+                dropZone.ondragover = function () {
+                    this.className = 'dropZone dragOver';
+                    return false;
+                }
+                //mouse leave
+                dropZone.ondragleave = function () {
+                    this.className = 'dropZone';
+                    return false;
+                }
+            } ());
+        </script>
     </div>
 
 
