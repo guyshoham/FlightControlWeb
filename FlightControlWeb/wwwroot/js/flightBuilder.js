@@ -24,7 +24,7 @@
     //send POST request
     fetch("/api/FlightPlan", postOptions)
         .then(response => response.json())
-        .catch(error => console.log(error))
+        .catch(error => showSnackbar(error))
 
 
 }
