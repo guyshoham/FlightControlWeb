@@ -65,16 +65,25 @@ function showFlightDetails(flightPlan) {
     let passengers = document.getElementById("flightCardPassengers");
     let startPoint = document.getElementById("flightCardStartPoint");
     let endPoint = document.getElementById("flightCardEndPoint");
-    let segmentsLength = flightPlan.segments.length;
-    title.textContent = "Flight ID: " + flightPlan.flightId;
-    company.textContent = "Company: " + flightPlan.companyName;
-    passengers.textContent = "Passengers: " + flightPlan.passengers;
-    startPoint.textContent = "Start: " +
-        flightPlan.initialLocation.latitude + "," +
-        flightPlan.initialLocation.longitude;
 
-    endPoint.textContent = "End: " +
-        flightPlan.segments[segmentsLength - 1].latitude + "," +
-        flightPlan.segments[segmentsLength - 1].longitude;
+    if (flightPlan === null) {
+        title.textContent = "";
+        company.textContent = "";
+        passengers.textContent = "";
+        startPoint.textContent = "";
+        endPoint.textContent = "";
+    } else {
+        let segmentsLength = flightPlan.segments.length;
+        title.textContent = "Flight ID: " + flightPlan.flightId;
+        company.textContent = "Company: " + flightPlan.companyName;
+        passengers.textContent = "Passengers: " + flightPlan.passengers;
+        startPoint.textContent = "Start: " +
+            flightPlan.initialLocation.latitude + "," +
+            flightPlan.initialLocation.longitude;
+
+        endPoint.textContent = "End: " +
+            flightPlan.segments[segmentsLength - 1].latitude + "," +
+            flightPlan.segments[segmentsLength - 1].longitude;
+    }
 }
 

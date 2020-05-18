@@ -37,7 +37,11 @@ function addMarker(flight) {
 
     //add listener
     marker.addListener('click', function () {
-        fetchFlightPlanById(marker.title);
+        selectedFlightPlanId = marker.title;
+        fetchFlightPlanById(selectedFlightPlanId);
+
+        let item = document.getElementById(selectedFlightPlanId);
+        item.classList.add("active");
     });
 }
 
@@ -66,5 +70,14 @@ function toggleBounce() {
     } else {
         marker.setAnimation(google.maps.Animation.BOUNCE);
         setTimeout(function () { marker.setAnimation(null); }, 750);
+    }
+}
+
+function removeMarkerById(id) {
+    for (var i = 0; i < markers.length; i++) {
+        if (markers[i].title === id) {
+            markers[i].setMap(null);
+            markers.splice(i, 1); i--;
+        }
     }
 }
