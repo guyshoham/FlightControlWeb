@@ -42,6 +42,8 @@ function addMarker(flight) {
 
         let item = document.getElementById(selectedFlightPlanId);
         item.classList.add("active");
+        let item_btn = document.getElementById(selectedFlightPlanId + "_delete_btn");
+        item_btn.classList.replace("btn-outline-danger", "btn-danger");
     });
 }
 
