@@ -21,6 +21,11 @@ div.myFlights {
     background: linear-gradient(to right, #CFDEF3, #E0EAFC);
 }
 
+    .myFlights.dragOver {
+        border: 4px dashed #ccc;
+        background: #000;
+    }
+
 div.externalFlights {
     height: 35%;
     width: 35%;
@@ -34,31 +39,15 @@ div.externalFlights {
 
 div.flightDetails {
     height: 25%;
-    width: 42%;
+    width: 60%;
     position: absolute;
     top: 70%;
-    left: 20%;
+    left: 2%;
     background: #E0EAFC; /* fallback for old browsers */
     background: -webkit-linear-gradient(to right, #CFDEF3, #E0EAFC); /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to right, #CFDEF3, #E0EAFC); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
-div.dropZone {
-    height: 25%;
-    width: 17%;
-    border: 2px dashed #ccc;
-    color: #ccc;
-    text-align: center;
-    line-height: 8;
-    position: absolute;
-    top: 70%;
-    left: 2%
-}
-
-    div.dropZone.dragOver {
-        border-color: #000;
-        color: #000;
-    }
 
 
 .myBorder {
