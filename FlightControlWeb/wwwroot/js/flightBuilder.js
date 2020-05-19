@@ -12,15 +12,15 @@ function AddFlightToList() {
             "date_time": "2020-12-26T20:00:00Z"
         },
         "segments": [
-            {
-                "longitude": 34.847037,
-                "latitude": 32.130233,
+            /*{
+                "longitude": 34.851563,
+                "latitude": 32.129792,
                 "timespan_seconds": 600
-            },
+            },*/
             {
-                "longitude": 34.847038,
-                "latitude": 32.130234,
-                "timespan_seconds": 300
+                "longitude": 34.851841,
+                "latitude": 32.134977,
+                "timespan_seconds": 600
             }
         ]
     };
@@ -31,6 +31,7 @@ function AddFlightToList() {
     //send POST request
     fetch("/api/FlightPlan", postOptions)
         .then(response => response.json())
+        .then(showSnackbar("FlightPlan Posted Successfully!", "success"))
         .catch(error => showSnackbar(error))
 
 
@@ -62,6 +63,8 @@ function appendItem(flight) {
         selectedFlightPlanId = item.id;
         showDetails()
     };
+    item.setAttribute("data-lat", flight.latitude);
+    item.setAttribute("data-lng", flight.longitude);
 
     //generate the inner content of the item
     const content = `<i class="fas fa-plane"></i>
@@ -70,7 +73,11 @@ function appendItem(flight) {
                     <i class="fas fa-user-tie"></i>
                     ${flight.companyName}
                     </i>
-                    <Button id='${item.id}_delete_btn' class="btn btn-xs btn-outline-danger btn-position-right" style="z-index: 3;" onclick="removeFlight('${item.id}'); event.stopPropagation();">
+
+                    <Button id="${item.id}_delete_btn" 
+                    class="btn btn-xs btn-outline-danger btn-position-right"                    
+                    style="z-index: 3;"
+                    onclick="removeFlight('${item.id}'); event.stopPropagation();">
                     X
                     </Button>`;
 

@@ -10,7 +10,8 @@ function fetchFlight() {
     //send GET request
     fetch("http://localhost:51271/api/Flights?relative_to=2020-12-26T18:05:00Z", getOptions)
         .then(response => response.json())
-        .then(data => addFlightsArrayToFlightList(data))
+        .then(flight => addFlightsArrayToFlightList(flight))
+        .then(checkCurrentPath())
         .catch(error => showSnackbar(error))
 }
 
@@ -22,7 +23,8 @@ function fetchFlightPlanById(id) {
     //send GET request
     fetch("http://localhost:51271/api/FlightPlan/" + id, getOptions)
         .then(response => response.json())
-        .then(data => showFlightDetails(data))
+        .then(plan => showFlightDetails(plan))
+        .then(plan => buildAndShowRoute(plan))
         .catch(error => showSnackbar(error))
 }
 
@@ -97,5 +99,6 @@ function showFlightDetails(flightPlan) {
             flightPlan.segments[segmentsLength - 1].latitude + "," +
             flightPlan.segments[segmentsLength - 1].longitude;
     }
-}
 
+    return flightPlan;
+}

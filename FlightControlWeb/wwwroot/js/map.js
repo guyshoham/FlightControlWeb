@@ -1,7 +1,8 @@
 ﻿var map;
 var icon;
-var marker
+var marker;
 var markers = []
+var currentPath;
 
 function initMap() {
     //map options
@@ -37,7 +38,7 @@ function addMarker(flight) {
 
     //add listener
     marker.addListener('click', function () {
-        selectedFlightPlanId = marker.title;
+        selectedFlightPlanId = flight.flightId;
         fetchFlightPlanById(selectedFlightPlanId);
 
         let item = document.getElementById(selectedFlightPlanId);
@@ -76,10 +77,128 @@ function toggleBounce() {
 }
 
 function removeMarkerById(id) {
+    //iterate all markers and loop for the marker of the flight that removed
     for (var i = 0; i < markers.length; i++) {
         if (markers[i].title === id) {
+            //remove marker from map and from array
             markers[i].setMap(null);
             markers.splice(i, 1); i--;
+
+            //if the current path belongs to that marker, remove it from map
+            if (currentPath.tag === id) {
+                currentPath.setMap(null);
+            }
         }
+    }
+}
+
+function buildAndShowRoute(flightPlan) {
+
+    // do not clear the current path from map on the first time
+    if (currentPath !== undefined && currentPath !== null) {
+        currentPath.setMap(null);
+    }
+
+    //init array of coords
+    let flightPlanCoordinates = [];
+
+    //collect the current position of the flight (relative to time)
+    let item = document.getElementById(flightPlan.flightId);
+    let pos = {
+        lat: Number(item.getAttribute("data-lat")),
+        lng: Number(item.getAttribute("data-lng"))
+    };
+
+    //add initial location landmark
+    let init = {
+        lat: flightPlan.initialLocation.latitude,
+        lng: flightPlan.initialLocation.longitude
+    };
+
+    let prev = init;
+    let after;
+    let flag = false;
+
+    //push init location to arr
+    flightPlanCoordinates.push(init);
+
+    //add all segments landmarks
+    for (let i = 0; i < flightPlan.segments.length; i++) {
+        let landMark = {
+            lat: flightPlan.segments[i].latitude,
+            lng: flightPlan.segments[i].longitude
+        };
+
+        after = landMark;
+
+        //check if the current pos of the flight is between prev and next segments
+        if (!flag && checkPos(prev, pos, after)) {
+            flightPlanCoordinates.push(pos);
+            flag = true;
+        }
+
+        flightPlanCoordinates.push(landMark);
+
+        prev = landMark;
+    }
+
+    console.log(flightPlanCoordinates);
+
+    //create path and add it to map
+    let flightPath = new google.maps.Polyline({
+        path: flightPlanCoordinates,
+        geodesic: true,
+        strokeColor: '#FF0000',
+        strokeOpacity: 1.0,
+        strokeWeight: 2,
+        tag: flightPlan.flightId
+    });
+
+    //add path to map and update the currentPath variable
+    flightPath.setMap(map);
+    currentPath = flightPath;
+}
+
+function checkPos(prev, pos, after) {
+
+    //check lat
+    if ((after.lat - prev.lat) >= 0) {
+        if (pos.lat >= prev.lat && pos.lat <= after.lat) { return true; }
+        else { return false; }
+    } else {
+        if (pos.lat <= prev.lat && pos.lat >= after.lat) { return true; }
+        else { return false; }
+    }
+
+    //check lng
+    if ((after.lng - prev.lng) >= 0) {
+        if (pos.lng >= prev.lng && pos.lng <= after.lng) { return true; }
+        else { return false; }
+    } else {
+        if (pos.lng <= prev.lng && pos.lng >= after.lng) { return true; }
+        else { return false; }
+    }
+
+}
+
+function checkCurrentPath() {
+
+    // if path is not drawn, do nothing
+    if (currentPath === undefined || currentPath === null) {
+        return;
+    }
+
+    //get path id
+    let id = currentPath.tag;
+    let flag = false;
+    
+    for (var i = 0; i < markers.length; i++) {
+        if (markers[i].title === id) { // found the marker that belongs to path, set flag to true
+            flag = true;           
+        }
+    }
+
+    if (!flag) { // if flag is false, that means the path belongs to an old flight. remove path from map
+        currentPath.setMap(null);
     }
 }
