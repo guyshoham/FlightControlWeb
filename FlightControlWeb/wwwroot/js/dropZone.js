@@ -1,5 +1,5 @@
-﻿(function () {
-    var dropZone = document.getElementById('dropZone');
+(function () {
+    var dropZone = document.getElementById('myFlights');
 
     //handle Json file from DropZone
     var upload = function (files) {
@@ -30,18 +30,18 @@
     dropZone.ondrop = function (e) {
         //prevent open file in browser - deafault drop behavior
         e.preventDefault();
-        this.className = 'dropZone';
+        this.className = 'myFlights';
         upload(e.dataTransfer.files);
     }
 
     //mouse enter
     dropZone.ondragover = function () {
-        this.className = 'dropZone dragOver';
+        this.className = 'myFlights dragOver';
         return false;
     }
     //mouse leave
     dropZone.ondragleave = function () {
-        this.className = 'dropZone';
+        this.className = 'myFlights';
         return false;
     }
 }());
