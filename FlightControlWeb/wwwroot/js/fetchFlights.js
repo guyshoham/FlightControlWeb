@@ -47,7 +47,7 @@ function clearList() {
     }
 }
 
-function showSnackbar(error) {
+function showSnackbar(error, type) {
     // Get the snackbar DIV
     var x = document.getElementById("snackbar");
 
@@ -55,8 +55,20 @@ function showSnackbar(error) {
     x.className = "show";
     x.textContent = error || "No Message Input";
 
+    type = type || "error";
+
+    if (type === "error") {
+        x.classList.add("error");
+    } else {
+        x.classList.add("success");
+    }
+
     // After 3 seconds, remove the show class from DIV
-    setTimeout(function () { x.className = x.className.replace("show", ""); }, 7000);
+    setTimeout(function () {
+        x.className = x.className.replace("show", "");
+        x.className = x.className.replace("error", "");
+        x.className = x.className.replace("success", "");
+    }, 7000);
 }
 
 function showFlightDetails(flightPlan) {

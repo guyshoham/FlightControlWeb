@@ -5,7 +5,7 @@
     var upload = function (files) {
         //file reader
         var reader = new FileReader();
-        reader.readAsText(files[0]); 
+        reader.readAsText(files[0]);
 
         //Invoked when reader reads the file
         reader.onload = function (e) {
@@ -21,9 +21,10 @@
 
             fetch("/api/FlightPlan", postOption)
                 .then(response => response.json())
+                .then(showSnackbar("FlightPlan Uploaded Successfully!", "success"))
                 .catch(error => showSnackbar(error))
         }
-             
+
     }
 
     dropZone.ondrop = function (e) {
