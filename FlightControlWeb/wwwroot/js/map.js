@@ -16,7 +16,7 @@ function initMap() {
 
     //TODO: should save icon in wwwroot folder
     icon = {
-        url: "https://cdn3.iconfinder.com/data/icons/map-markers-1/512/airplane-512.png", // url
+        url: "images/marker_icon.webp", // url
         scaledSize: new google.maps.Size(36, 36), // scaled size
         origin: new google.maps.Point(0, 0), // origin
         anchor: new google.maps.Point(0, 0) // anchor
