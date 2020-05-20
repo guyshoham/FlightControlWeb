@@ -15,12 +15,12 @@ function AddFlightToList() {
             {
                 "longitude": 34.851563,
                 "latitude": 32.129792,
-                "timespan_seconds": 600
+                "timespan_seconds": 30
             },
             {
                 "longitude": 34.851841,
                 "latitude": 32.134977,
-                "timespan_seconds": 600
+                "timespan_seconds": 30
             }
         ]
     };
