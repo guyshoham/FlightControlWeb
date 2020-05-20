@@ -7,7 +7,6 @@ function fetchFlight() {
         "method": "GET"
     }
     let now = new Date();
-    console.log(now.toISOString());
     //send GET request
     fetch("http://localhost:51271/api/Flights?relative_to=" + now.toISOString(), getOptions)
         .then(response => response.json())

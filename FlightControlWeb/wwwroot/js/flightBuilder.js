@@ -24,7 +24,6 @@ function AddFlightToList() {
             }
         ]
     };
-    console.log(flight);
 
     //create POST request
     let postOptions = preparePost(flight);
