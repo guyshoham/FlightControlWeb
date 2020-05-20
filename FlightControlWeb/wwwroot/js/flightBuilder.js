@@ -1,4 +1,4 @@
-﻿var selectedFlightPlanId;
+var selectedFlightPlanId;
 
 function AddFlightToList() {
 
@@ -121,6 +121,7 @@ function removeFlight(flightId) {
     //send DELETE request
     fetch("/api/Flights/" + flightId, deleteOptions)
         .then(response => response.json())
+        .then(showSnackbar("FlightPlan " + flightId + " Deleted Successfully!", "success"))
         .then(document.getElementById(flightId).remove())
         .catch(error => console.log(error))
 }
