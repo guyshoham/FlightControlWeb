@@ -1,7 +1,7 @@
 var selectedFlightPlanId;
 
 function AddFlightToList() {
-
+    let now = new Date();
     //create demo flight object
     let flight = {
         "passengers": 69,
@@ -9,18 +9,18 @@ function AddFlightToList() {
         "initial_location": {
             "longitude": 34.847036,
             "latitude": 32.130232,
-            "date_time": "2020-12-26T20:00:00Z"
+            "date_time": now.toISOString()
         },
         "segments": [
             {
                 "longitude": 34.851563,
                 "latitude": 32.129792,
-                "timespan_seconds": 600
+                "timespan_seconds": 30
             },
             {
                 "longitude": 34.851841,
                 "latitude": 32.134977,
-                "timespan_seconds": 600
+                "timespan_seconds": 30
             }
         ]
     };

@@ -15,6 +15,7 @@ namespace FlightControlWeb.Services
         }
         public List<Flight> GetAllFlightsRelativeToDate(DateTime dateInput)
         {
+            dateInput = dateInput.ToUniversalTime();
             List<Flight> list = new List<Flight>();
 
             // iterate over all plans in dictionary

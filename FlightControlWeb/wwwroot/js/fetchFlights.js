@@ -6,9 +6,9 @@ function fetchFlight() {
     let getOptions = {
         "method": "GET"
     }
-
+    let now = new Date();
     //send GET request
-    fetch("http://localhost:51271/api/Flights?relative_to=2020-12-26T18:05:00Z", getOptions)
+    fetch("http://localhost:51271/api/Flights?relative_to=" + now.toISOString(), getOptions)
         .then(response => response.json())
         .then(flight => addFlightsArrayToFlightList(flight))
         .then(checkCurrentPath())

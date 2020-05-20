@@ -142,8 +142,6 @@ function buildAndShowRoute(flightPlan) {
         prev = landMark;
     }
 
-    console.log(flightPlanCoordinates);
-
     //create path and add it to map
     let flightPath = new google.maps.Polyline({
         path: flightPlanCoordinates,
