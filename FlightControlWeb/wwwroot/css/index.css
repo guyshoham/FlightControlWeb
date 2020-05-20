@@ -19,12 +19,31 @@ div.myFlights {
     background: #E0EAFC;
     background: -webkit-linear-gradient(to right, #CFDEF3, #E0EAFC);
     background: linear-gradient(to right, #CFDEF3, #E0EAFC);
+    z-index: 1;
 }
 
-    .myFlights.dragOver {
-        border: 4px dashed #ccc;
-        background: #000;
-    }
+.myFlights.dragOver {
+    border: 2px dashed #000;
+    opacity: 0;
+}
+
+.dropZone {
+    height: 50%;
+    width: 35%;
+    position: absolute;
+    top: 5%;
+    right: 2%;
+    border: 2px dashed #000;
+    text-align: center;
+    line-height: 15;
+    background: #FFF;
+}
+
+.dropZone img {
+    height:60%;
+    width:60%;
+}
+    
 
 div.externalFlights {
     height: 35%;
