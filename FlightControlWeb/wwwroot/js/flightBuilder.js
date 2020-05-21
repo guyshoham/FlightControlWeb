@@ -51,7 +51,7 @@ function preparePost(flight) {
 function appendItem(flight) {
     let flights = document.getElementById("flight_list");
     let item = document.createElement("li");
-    item.id = flight.flightId;
+    item.id = flight.flight_id;
     item.className = "list-group-item list-group-item-action list-group-hover";
     item.onclick = function () {
         if ((selectedFlightPlanId !== undefined) && (selectedFlightPlanId !== null)) {
@@ -71,7 +71,7 @@ function appendItem(flight) {
                     ${item.id}
                     <br>
                     <i class="fas fa-user-tie"></i>
-                    ${flight.companyName}
+                    ${flight.company_name}
                     </i>
 
                     <Button id="${item.id}_delete_btn" 
