@@ -19,6 +19,7 @@ namespace FlightControlWeb.Controllers
             _service = service;
         }
 
+        // POST api/FlightPlan
         [HttpPost]
         [Route("FlightPlan")]
         public ActionResult<FlightPlan> Post(JsonElement json)
@@ -34,6 +35,7 @@ namespace FlightControlWeb.Controllers
             return Ok(flightPlan);
         }
 
+        // GET FlightPlan/{id}
         [HttpGet]
         [Route("FlightPlan/{id}")]
         public ActionResult<Dictionary<string, FlightPlan>> Get(string id)
@@ -48,6 +50,7 @@ namespace FlightControlWeb.Controllers
             return Ok(flightPlan);
         }
 
+        // DELETE Flights/{id}
         [HttpDelete]
         [Route("Flights/{id}")]
         public ActionResult<Flight> Delete(string id)

@@ -19,6 +19,7 @@ namespace FlightControlWeb.Controllers
             _service = service;
         }
 
+        // GET api/Flights?relative_to=<DATE_TIME>
         [HttpGet]
         [Route("Flights")]
         public ActionResult<List<Flight>> GetFlightsByTime([FromQuery] DateTime relative_to)
