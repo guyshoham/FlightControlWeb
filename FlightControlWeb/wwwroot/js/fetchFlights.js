@@ -8,7 +8,7 @@ function fetchFlight() {
     }
     let now = new Date();
     //send GET request
-    fetch("http://localhost:51271/api/Flights?relative_to=" + now.toISOString(), getOptions)
+    fetch("http://localhost:51271/api/Flights?relative_to=" + now.toISOString() + "&sync_all", getOptions)
         .then(response => response.json())
         .then(flight => addFlightsArrayToFlightList(flight))
         .then(checkCurrentPath())
@@ -29,23 +29,28 @@ function fetchFlightPlanById(id) {
 }
 
 function addFlightsArrayToFlightList(array) {
-    clearList();
+    clearLists();
     deleteMarkers();
 
     for (var i = 0; i < array.length; i++) {
         marker = array[i];
 
         appendItem(marker);
-        addMarker(marker);
-        marker.addListener('click', toggleBounce);
+        addMarker(marker);        
     }
 }
 
-function clearList() {
-    let list = document.getElementById("flight_list");
-    let childrenCount = list.childElementCount;
+function clearLists() {
+    let list_internal = document.getElementById("flight_list");
+    let childrenCount = list_internal.childElementCount;
     for (var i = 0; i < childrenCount; i++) {
-        list.removeChild(list.firstElementChild);
+        list_internal.removeChild(list_internal.firstElementChild);
+    }
+
+    let list_external = document.getElementById("flight_list_external");
+    childrenCount = list_external.childElementCount;
+    for (var i = 0; i < childrenCount; i++) {
+        list_external.removeChild(list_external.firstElementChild);
     }
 }
 

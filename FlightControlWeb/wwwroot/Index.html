@@ -29,9 +29,12 @@
         <!-- ExternalFlights Component -->
         <div id="externalFlights" class="externalFlights myBorder">
             <h4 class="headerPosition">External Flights</h4>
-            <button type="button" class="btn btn-primary" onclick="AddFlightToList()" style="margin-left: 5px;">Add Flight (POST)</button>
-            <button type="button" class="btn btn-danger" onclick="showSnackbar()">Error Message Example</button>
+            <ul id="flight_list_external" class="list-group list-group-mine">
+            </ul>
         </div>
+
+        <button type="button" class="btn btn-primary" onclick="AddFlightToList()" style="margin-left: 5px;">Add Flight (POST)</button>
+        <button type="button" class="btn btn-danger" onclick="showSnackbar()">Error Message Example</button>
 
         <!-- FlightDetails Component -->
         <div id="flightDetails" class="flightDetails myBorder">

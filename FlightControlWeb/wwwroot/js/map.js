@@ -32,13 +32,13 @@ function addMarker(flight) {
         position: coords,
         map: map,
         icon: icon,
-        title: flight.flightId
+        title: flight.flight_id
     })
     markers.push(marker);
 
     //add listener
     marker.addListener('click', function () {
-        selectedFlightPlanId = flight.flightId;
+        selectedFlightPlanId = flight.flight_id;
         fetchFlightPlanById(selectedFlightPlanId);
 
         let item = document.getElementById(selectedFlightPlanId);

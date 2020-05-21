@@ -3,7 +3,7 @@ var selectedFlightPlanId;
 function AddFlightToList() {
     let now = new Date();
     //create demo flight object
-    let flight = {
+    let demoFlight = {
         "passengers": 69,
         "company_name": "JavaScriptAir",
         "initial_location": {
@@ -26,7 +26,7 @@ function AddFlightToList() {
     };
 
     //create POST request
-    let postOptions = preparePost(flight);
+    let postOptions = preparePost(demoFlight);
 
     //send POST request
     fetch("/api/FlightPlan", postOptions)
@@ -50,6 +50,7 @@ function preparePost(flight) {
 
 function appendItem(flight) {
     let flights = document.getElementById("flight_list");
+    let flightsExternal = document.getElementById("flight_list_external");
     let item = document.createElement("li");
     item.id = flight.flight_id;
     item.className = "list-group-item list-group-item-action list-group-hover";
@@ -61,13 +62,14 @@ function appendItem(flight) {
             item_btn.classList.replace("btn-danger", "btn-outline-danger");
         }
         selectedFlightPlanId = item.id;
-        showDetails()
+        //showDetails()
     };
     item.setAttribute("data-lat", flight.latitude);
     item.setAttribute("data-lng", flight.longitude);
 
-    //generate the inner content of the item
-    const content = `<i class="fas fa-plane"></i>
+    if (!flight.is_external) {
+        //generate the inner content of the item
+        const content = `<i class="fas fa-plane"></i>
                     ${item.id}
                     <br>
                     <i class="fas fa-user-tie"></i>
@@ -81,10 +83,24 @@ function appendItem(flight) {
                     X
                     </Button>`;
 
-    item.innerHTML = content;
+        item.innerHTML = content;
 
-    //add item to list
-    flights.append(item);
+        //add item to list
+        flights.append(item);
+    } else {
+        //generate the inner content of the item
+        const content = `<i class="fas fa-plane"></i>
+                    ${item.id}
+                    <br>
+                    <i class="fas fa-user-tie"></i>
+                    ${flight.company_name}
+                    </i>`;
+
+        item.innerHTML = content;
+
+        //add item to list
+        flightsExternal.append(item);
+    }
 
     if (item.id === selectedFlightPlanId) {
         item.classList.add("active");
