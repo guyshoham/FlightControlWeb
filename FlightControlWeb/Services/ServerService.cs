@@ -1,16 +1,17 @@
 ﻿using FlightControlWeb.Models;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 
 namespace FlightControlWeb.Services
 {
     public class ServerService : IServerService
     {
-        private readonly Dictionary<string, Server> _servers;
+        private static ConcurrentDictionary<string, Server> _servers;
 
         public ServerService()
         {
-            _servers = new Dictionary<string, Server>();
+            _servers = new ConcurrentDictionary<string, Server>();
         }
 
         public Server AddServer(Server item)
@@ -24,21 +25,13 @@ namespace FlightControlWeb.Services
             }
 
             item.ServerId = id;
-            _servers.Add(item.ServerId, item);
+            _servers.TryAdd(item.ServerId, item);
             return item;
         }
         public Server DeleteServerById(string id)
         {
-
-            if (!_servers.TryGetValue(id, out Server value))
-            {
-                // the key isn't in the dictionary.
-                return null;
-            }
-
-            bool status = _servers.Remove(id);
-
-            return status ? value : null;
+            _servers.TryRemove(id, out Server value);
+            return value;
         }
         public Dictionary<string, Server> GetServers()
         {
