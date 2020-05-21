@@ -16,7 +16,6 @@ namespace FlightControlWeb.Services
 
         public Server AddServer(Server item)
         {
-            var rand = new Random();
             string id = Utils.IDGenerator();
 
             while (_servers.ContainsKey(id))
@@ -33,7 +32,7 @@ namespace FlightControlWeb.Services
             _servers.TryRemove(id, out Server value);
             return value;
         }
-        public Dictionary<string, Server> GetServers()
+        public ConcurrentDictionary<string, Server> GetServers()
         {
             return _servers;
         }

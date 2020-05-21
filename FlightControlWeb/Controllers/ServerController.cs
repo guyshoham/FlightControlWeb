@@ -2,6 +2,7 @@
 using FlightControlWeb.Services;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text.Json;
 
@@ -41,7 +42,7 @@ namespace FlightControlWeb.Controllers
 
         [HttpGet]
         [Route("servers")]
-        public ActionResult<Dictionary<string, Server>> Get()
+        public ActionResult<ConcurrentDictionary<string, Server>> Get()
         {
             var server = _service.GetServers();
 

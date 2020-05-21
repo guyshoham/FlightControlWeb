@@ -33,7 +33,6 @@ namespace FlightControlWeb.Services
         }
         public FlightPlan AddFlightPlan(FlightPlan item)
         {
-            var rand = new Random();
             string id = Utils.IDGenerator();
 
             while (_flightPlans.ContainsKey(id))
