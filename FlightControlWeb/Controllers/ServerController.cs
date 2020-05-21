@@ -42,16 +42,11 @@ namespace FlightControlWeb.Controllers
 
         [HttpGet]
         [Route("servers")]
-        public ActionResult<ConcurrentDictionary<string, Server>> Get()
+        public ActionResult<List<Server>> Get()
         {
-            var server = _service.GetServers();
+            var list = _service.GetServers();
 
-            if (server.Count == 0)
-            {
-                return NotFound();
-            }
-
-            return server;
+            return list;
         }
 
         [HttpDelete]

@@ -32,9 +32,15 @@ namespace FlightControlWeb.Services
             _servers.TryRemove(id, out Server value);
             return value;
         }
-        public ConcurrentDictionary<string, Server> GetServers()
+        public List<Server> GetServers()
         {
-            return _servers;
+            List<Server> list = new List<Server>();
+
+            foreach (Server server in _servers.Values)
+            {
+                list.Add(server);
+            }
+            return list;
         }
     }
 }

@@ -8,7 +8,7 @@ namespace FlightControlWeb.Services
     public interface IServerService
     {
         Server AddServer(Server item);
-        ConcurrentDictionary<string, Server> GetServers();
+        List<Server> GetServers();
         Server DeleteServerById(string id);
     }
 }
