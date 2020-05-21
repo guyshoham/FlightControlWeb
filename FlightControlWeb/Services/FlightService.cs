@@ -1,17 +1,17 @@
 ﻿using FlightControlWeb.Models;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 
 namespace FlightControlWeb.Services
 {
     public class FlightService : IFlightService
     {
-
-        private readonly Dictionary<string, FlightPlan> _flightPlans;
+        private static ConcurrentDictionary<string, FlightPlan> _flightPlans;
 
         public FlightService()
         {
-            _flightPlans = new Dictionary<string, FlightPlan>();
+            _flightPlans = new ConcurrentDictionary<string, FlightPlan>();
         }
         public List<Flight> GetAllFlightsRelativeToDate(DateTime dateInput)
         {
@@ -42,7 +42,8 @@ namespace FlightControlWeb.Services
             }
 
             item.FlightId = id;
-            _flightPlans.Add(item.FlightId, item);
+            _flightPlans.TryAdd(item.FlightId, item);
+
             return item;
         }
         public FlightPlan GetFlightPlanById(string id)
@@ -58,16 +59,8 @@ namespace FlightControlWeb.Services
         }
         public FlightPlan DeleteFlightPlanById(string id)
         {
-
-            if (!_flightPlans.TryGetValue(id, out FlightPlan value))
-            {
-                // the key isn't in the dictionary.
-                return null;
-            }
-
-            bool status = _flightPlans.Remove(id);
-
-            return status ? value : null;
+            _flightPlans.TryRemove(id, out FlightPlan value);
+            return value;
         }
 
         public static Flight GetFlight(FlightPlan plan, DateTime dateInput)
