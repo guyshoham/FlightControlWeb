@@ -3,6 +3,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 
+
 namespace FlightControlWeb.Services
 {
     public class FlightService : IFlightService
@@ -18,11 +19,11 @@ namespace FlightControlWeb.Services
             dateInput = dateInput.ToUniversalTime();
             List<Flight> list = new List<Flight>();
 
-            // iterate over all plans in dictionary
+            // iterate over all internal plans in dictionary
             foreach (FlightPlan plan in _flightPlans.Values)
             {
                 // get flight from this plan (if not fit, returns null)
-                Flight f = GetFlight(plan, dateInput);
+                Flight f = GetFlight(plan, dateInput, false);
                 if (f != null)
                 {
                     list.Add(f);
@@ -62,7 +63,9 @@ namespace FlightControlWeb.Services
             return value;
         }
 
-        public static Flight GetFlight(FlightPlan plan, DateTime dateInput)
+      
+
+        public static Flight GetFlight(FlightPlan plan, DateTime dateInput, bool isExternal)
         {
             DateTime departureTime = plan.InitialLocation.DateTime;
             if (DateTime.Compare(departureTime, dateInput) > 0)
@@ -98,7 +101,7 @@ namespace FlightControlWeb.Services
                         Passengers = plan.Passengers,
                         CompanyName = plan.CompanyName,
                         DateTime = dateInput,
-                        IsExternal = false // TODO: what value does it get and from where?
+                        IsExternal = isExternal
                     };
                     return flight;
                 }
