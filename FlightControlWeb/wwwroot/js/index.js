@@ -41,7 +41,7 @@ function addMarker(flight) {
 
     //add listener
     marker.addListener('click', function () {
-        flightClicked(selectedFlightPlanId);
+        flightClicked(flight.flight_id);
     });
 }
 
