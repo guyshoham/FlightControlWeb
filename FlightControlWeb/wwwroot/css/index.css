@@ -57,7 +57,7 @@ div.externalFlights {
 }
 
 div.flightDetails {
-    height: 25%;
+    min-height: 25%;
     width: 60%;
     position: absolute;
     top: 70%;
