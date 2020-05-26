@@ -87,21 +87,11 @@ function buildAndShowRoute(flightPlan) {
     //init array of coords
     let flightPlanCoordinates = [];
 
-    //collect the current position of the flight (relative to time)
-    //let item = document.getElementById(flightPlan.flightId);
-    /*let pos = {
-        lat: Number(item.getAttribute("data-lat")),
-        lng: Number(item.getAttribute("data-lng"))
-    };*/
-
     //add initial location landmark
     let init = {
         lat: flightPlan.initialLocation.latitude,
         lng: flightPlan.initialLocation.longitude
     };
-
-    // let prev = init;
-    // let after;
 
     //push init location to arr
     flightPlanCoordinates.push(init);
@@ -113,11 +103,7 @@ function buildAndShowRoute(flightPlan) {
             lng: flightPlan.segments[i].longitude
         };
 
-        //after = landMark;
-
         flightPlanCoordinates.push(landMark);
-
-        //prev = landMark;
     }
 
     //create path and add it to map
