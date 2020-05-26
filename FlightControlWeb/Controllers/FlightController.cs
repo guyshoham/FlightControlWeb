@@ -70,7 +70,7 @@ namespace FlightControlWeb.Controllers
 
         async Task<HttpResponseMessage> GetServers()
         {
-            string url = "http://localhost:51271/api/servers";
+            string url = "/api/servers";
             HttpResponseMessage response = await client.GetAsync(url);
             return response;
         }
