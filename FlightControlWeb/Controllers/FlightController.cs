@@ -20,11 +20,24 @@ namespace FlightControlWeb.Controllers
     public class FlightController : ControllerBase
     {
         private readonly IFlightService _service;
-        static HttpClient client = new HttpClient();
+        static HttpClient client;
 
         public FlightController(IFlightService service)
         {
             _service = service;
+
+            var handler = new HttpClientHandler();
+            handler.ClientCertificateOptions = ClientCertificateOption.Manual;
+            handler.ServerCertificateCustomValidationCallback =
+                (httpRequestMessage, cert, cetChain, policyErrors) =>
+                {
+                    return true;
+                };
+
+            client = new HttpClient(handler);
+
+            ServicePointManager.ServerCertificateValidationCallback +=
+    (sender, cert, chain, sslPolicyErrors) => true;
         }
 
         // GET api/Flights?relative_to=<DATE_TIME>&sync_all (sync_all=OPTIONAL)
@@ -76,7 +89,6 @@ namespace FlightControlWeb.Controllers
             var baseAddr = Request.Host.Value;
 
             string url = "http://" + baseAddr + "/api/servers";
-            System.Diagnostics.Debug.WriteLine("URL:" + url);
 
             HttpResponseMessage response = await client.GetAsync(url);
             return response;
