@@ -20,24 +20,11 @@ namespace FlightControlWeb.Controllers
     public class FlightController : ControllerBase
     {
         private readonly IFlightService _service;
-        static HttpClient client;
+        static HttpClient client = new HttpClient;
 
         public FlightController(IFlightService service)
         {
             _service = service;
-
-            var handler = new HttpClientHandler();
-            handler.ClientCertificateOptions = ClientCertificateOption.Manual;
-            handler.ServerCertificateCustomValidationCallback =
-                (httpRequestMessage, cert, cetChain, policyErrors) =>
-                {
-                    return true;
-                };
-
-            client = new HttpClient(handler);
-
-            ServicePointManager.ServerCertificateValidationCallback +=
-    (sender, cert, chain, sslPolicyErrors) => true;
         }
 
         // GET api/Flights?relative_to=<DATE_TIME>&sync_all (sync_all=OPTIONAL)
