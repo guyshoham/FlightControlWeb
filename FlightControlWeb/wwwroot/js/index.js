@@ -1,16 +1,16 @@
-﻿var map;
-var icon;
-var marker;
-var markers = []
-var currentPath;
-var selectedFlightPlanId;
+﻿let map;
+let icon;
+let marker;
+let markers = []
+let currentPath;
+let selectedFlightPlanId;
 
 setInterval(fetchFlightsSyncAll, 5000);
 
 //map functions
 function initMap() {
     //map options
-    var options = {
+    let options = {
         zoom: 15,
         center: { lat: 32.130232, lng: 34.847036 }
     }
@@ -46,7 +46,7 @@ function addMarker(flight) {
 }
 
 function clearMarkers() {
-    for (var i = 0; i < markers.length; i++) {
+    for (let i = 0; i < markers.length; i++) {
         markers[i].setMap(null);
     }
     markers = [];
@@ -63,7 +63,7 @@ function toggleBounce() {
 
 function removeMarkerById(id) {
     //iterate all markers and loop for the marker of the flight that removed
-    for (var i = 0; i < markers.length; i++) {
+    for (let i = 0; i < markers.length; i++) {
         if (markers[i].title === id) {
             //remove marker from map and from array
             markers[i].setMap(null);
@@ -87,22 +87,11 @@ function buildAndShowRoute(flightPlan) {
     //init array of coords
     let flightPlanCoordinates = [];
 
-    //collect the current position of the flight (relative to time)
-    let item = document.getElementById(flightPlan.flightId);
-    let pos = {
-        lat: Number(item.getAttribute("data-lat")),
-        lng: Number(item.getAttribute("data-lng"))
-    };
-
     //add initial location landmark
     let init = {
         lat: flightPlan.initialLocation.latitude,
         lng: flightPlan.initialLocation.longitude
     };
-
-    let prev = init;
-    let after;
-    let flag = false;
 
     //push init location to arr
     flightPlanCoordinates.push(init);
@@ -114,17 +103,7 @@ function buildAndShowRoute(flightPlan) {
             lng: flightPlan.segments[i].longitude
         };
 
-        after = landMark;
-
-        //check if the current pos of the flight is between prev and next segments
-        if (!flag && checkPos(prev, pos, after)) {
-            flightPlanCoordinates.push(pos);
-            flag = true;
-        }
-
         flightPlanCoordinates.push(landMark);
-
-        prev = landMark;
     }
 
     //create path and add it to map
@@ -142,30 +121,8 @@ function buildAndShowRoute(flightPlan) {
     currentPath = flightPath;
 }
 
-function checkPos(prev, pos, after) {
-
-    //check lat
-    if ((after.lat - prev.lat) >= 0) {
-        if (pos.lat >= prev.lat && pos.lat <= after.lat) { return true; }
-        else { return false; }
-    } else {
-        if (pos.lat <= prev.lat && pos.lat >= after.lat) { return true; }
-        else { return false; }
-    }
-
-    //check lng
-    if ((after.lng - prev.lng) >= 0) {
-        if (pos.lng >= prev.lng && pos.lng <= after.lng) { return true; }
-        else { return false; }
-    } else {
-        if (pos.lng <= prev.lng && pos.lng >= after.lng) { return true; }
-        else { return false; }
-    }
-
-}
-
 function isMarkerExist(id) {
-    for (var i = 0; i < markers.length; i++) {
+    for (let i = 0; i < markers.length; i++) {
         if (markers[i].title === id) {
             return true;
         }
@@ -232,7 +189,7 @@ function addFlightsArrayToFlightList(array) {
     clearLists(); // remove all flights from list (internal + external)
     clearMarkers(); // remove all markers from map
 
-    for (var i = 0; i < array.length; i++) {
+    for (let i = 0; i < array.length; i++) {
         marker = array[i];
 
         appendFlightToList(marker);
@@ -242,7 +199,7 @@ function addFlightsArrayToFlightList(array) {
 
 function showSnackbar(error, type) {
     // Get the snackbar DIV
-    var x = document.getElementById("snackbar");
+    let x = document.getElementById("snackbar");
 
     // Add the "show" class to DIV
     x.className = "show";
@@ -262,6 +219,8 @@ function showSnackbar(error, type) {
         x.className = x.className.replace("error", "");
         x.className = x.className.replace("success", "");
     }, 7000);
+
+    return error;
 }
 
 function showFlightDetails(flightPlan) {
@@ -297,13 +256,13 @@ function showFlightDetails(flightPlan) {
 function clearLists() {
     let list_internal = document.getElementById("flight_list");
     let childrenCount = list_internal.childElementCount;
-    for (var i = 0; i < childrenCount; i++) {
+    for (let i = 0; i < childrenCount; i++) {
         list_internal.removeChild(list_internal.firstElementChild);
     }
 
     let list_external = document.getElementById("flight_list_external");
     childrenCount = list_external.childElementCount;
-    for (var i = 0; i < childrenCount; i++) {
+    for (let i = 0; i < childrenCount; i++) {
         list_external.removeChild(list_external.firstElementChild);
     }
 }
@@ -340,25 +299,28 @@ function checkSelectedPlan() {
         if (!isMarkerExist(selectedFlightPlanId)) {
             currentPath.setMap(null);
             selectedFlightPlanId = null;
+            return false;
         }
     }
+
+    return true;
 }
 
 
 //dropzone handling
 (function () {
-    var dropZone = document.getElementById('myFlights');
+    const dropZone = document.getElementById('myFlights');
 
     //handle Json file from DropZone
-    var upload = function (files) {
+    let upload = function (files) {
         //file reader
-        var reader = new FileReader();
+        let reader = new FileReader();
         reader.readAsText(files[0]);
 
         //Invoked when reader reads the file
         reader.onload = function (e) {
             //stores text from json file
-            var text = reader.result;
+            let text = reader.result;
             let postOption = {
                 "method": "POST",
                 "headers": {
@@ -373,7 +335,7 @@ function checkSelectedPlan() {
                 .catch(error => showSnackbar(error))
         }
 
-    }
+    };
 
     dropZone.ondrop = function (e) {
         //prevent open file in browser - deafault drop behavior
@@ -395,7 +357,7 @@ function checkSelectedPlan() {
 }());
 
 function flightClicked(id) {
-    if (selectedFlightPlanId !== null & selectedFlightPlanId !== undefined) {
+    if (selectedFlightPlanId !== null && selectedFlightPlanId !== undefined) {
         setNotActive(selectedFlightPlanId);
     }
     setActive(id);
