@@ -195,6 +195,10 @@ function addFlightsArrayToFlightList(array) {
         appendFlightToList(marker);
         addMarker(marker);
     }
+
+    if (array.length === 0) {
+        showSnackbar("There is no active flights at the moment...", "info");
+    }
 }
 
 function showSnackbar(error, type) {
@@ -209,8 +213,10 @@ function showSnackbar(error, type) {
 
     if (type === "error") {
         x.classList.add("error");
-    } else {
+    } else if (type === "success") {
         x.classList.add("success");
+    } else if (type === "info") {
+        x.classList.add("info");
     }
 
     // After 3 seconds, remove the show class from DIV
