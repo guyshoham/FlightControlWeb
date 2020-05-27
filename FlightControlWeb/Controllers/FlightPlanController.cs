@@ -21,7 +21,7 @@ namespace FlightControlWeb.Controllers
         // POST api/FlightPlan
         [HttpPost]
         [Route("FlightPlan")]
-        public ActionResult<FlightPlan> Post(JsonElement json)
+        public ActionResult<FlightPlan> Post(object json)
         {
             FlightPlan serializedJson = JsonConvert.DeserializeObject<FlightPlan>(json.ToString());
             FlightPlan flightPlan = _service.AddFlightPlan(serializedJson);
