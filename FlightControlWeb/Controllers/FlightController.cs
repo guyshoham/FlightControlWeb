@@ -20,7 +20,7 @@ namespace FlightControlWeb.Controllers
     public class FlightController : ControllerBase
     {
         private readonly IFlightService _service;
-        static HttpClient client = new HttpClient;
+        static HttpClient client = new HttpClient();
 
         public FlightController(IFlightService service)
         {
