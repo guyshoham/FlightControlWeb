@@ -54,7 +54,7 @@ namespace FlightControlWeb.Controllers
         // DELETE api/servers/{id}
         [HttpDelete]
         [Route("servers/{id}")]
-        public ActionResult<Flight> Delete(string id)
+        public ActionResult<Server> Delete(string id)
         {
             var server = _service.DeleteServerById(id);
 

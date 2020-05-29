@@ -16,6 +16,7 @@ namespace FlightControlWeb.Test
         static FlightController flightController;
         static FlightPlanController flightPlanController;
         static List<Flight> flightsList;
+        static DateTime postDateTime;
 
 
         [ClassInitialize]
@@ -26,10 +27,10 @@ namespace FlightControlWeb.Test
             flightPlanController = new FlightPlanController(flightServiceMock.Object);
 
             //Take current Time
-            DateTime dateTime = DateTime.Now;
-            dateTime = dateTime.ToUniversalTime();
+            postDateTime = DateTime.Now;
+            postDateTime = postDateTime.ToUniversalTime();
             //Create Json with current time
-            string dateAsString = dateTime.ToString("yyyy-MM-ddTHH:mm:ssZ");
+            string dateAsString = postDateTime.ToString("yyyy-MM-ddTHH:mm:ssZ");
 
             string jsonFlight = @"{""passengers"": 216,
     ""company_name"": ""SwissAir"",
@@ -42,7 +43,7 @@ namespace FlightControlWeb.Test
         {
             ""longitude"": 33.500,
             ""latitude"": 31.500,
-            ""timespan_seconds"": 300
+            ""timespan_seconds"": 600
         }
     ]}";
             //Post Flight
@@ -52,22 +53,18 @@ namespace FlightControlWeb.Test
         [TestMethod]
         public void FlightIsActive()
         {
-            DateTime dateTime = DateTime.Now;
-            dateTime = dateTime.ToUniversalTime();
             //Flight still Active
-            dateTime = dateTime.AddMinutes(4);
+            DateTime oneMinute = postDateTime.AddMinutes(1);
             //Get Active Flights
-            flightsList = flightServiceMock.Object.GetAllFlightsRelativeToDate(dateTime);
+            flightsList = flightServiceMock.Object.GetAllFlightsRelativeToDate(oneMinute);
             Assert.AreEqual(flightsList.Count, 1);
         }
 
         [TestMethod]
         public void FlightIsNotActiveAnymore()
         {
-            DateTime dateTime = DateTime.Now;
-            dateTime = dateTime.ToUniversalTime();
             //Flight Not active anymore
-            dateTime = dateTime.AddMinutes(5);
+            DateTime dateTime = postDateTime.AddMinutes(11);
 
             flightsList = flightServiceMock.Object.GetAllFlightsRelativeToDate(dateTime);
             Assert.AreEqual(flightsList.Count, 0);

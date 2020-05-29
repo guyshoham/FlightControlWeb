@@ -14,6 +14,7 @@ namespace FlightControlWeb.Test
         static Mock<ServerService> serverServiceMock;
         static ServerController serverController;
         static ActionResult<List<Server>> serverControlResult;
+        static string serverId;
 
         [AssemblyInitialize]
         public static void AssemblyInit(TestContext context)
@@ -24,6 +25,7 @@ namespace FlightControlWeb.Test
             string jsonServer = @"{""ServerURL"": ""test.com""}";
             serverController.Post(jsonServer);
             serverControlResult = serverController.Get();
+            serverId = serverControlResult.Value[0].ServerId;
             var a = 5;
         }
 
@@ -43,6 +45,14 @@ namespace FlightControlWeb.Test
         public void ServersURLIsValid()
         {
             Assert.AreEqual(serverControlResult.Value[0].ServerURL, "test.com");
+        }
+
+        [TestMethod]
+        public void DeleteServer()
+        {
+            ActionResult<Server> response = serverController.Delete(serverId);
+            var result = response.Result as OkObjectResult;
+            Assert.AreEqual(result.StatusCode, 200);
         }
     }
 }
