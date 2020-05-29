@@ -6,14 +6,14 @@ using Moq;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MyTests
+namespace FlightControlWeb.Test
 {
     [TestClass]
     public class ServerControllerTest
     {
         static Mock<ServerService> serverServiceMock;
         static ServerController serverController;
-        static ActionResult<List<Server>> result;
+        static ActionResult<List<Server>> serverControlResult;
 
         [AssemblyInitialize]
         public static void AssemblyInit(TestContext context)
@@ -21,28 +21,28 @@ namespace MyTests
             serverServiceMock = new Mock<ServerService>();
             serverController = new ServerController(serverServiceMock.Object);
 
-            string jsonServer = @"{""ServerURL"": ""helloworld.com""}";
-
+            string jsonServer = @"{""ServerURL"": ""test.com""}";
             serverController.Post(jsonServer);
-            result = serverController.Get();
+            serverControlResult = serverController.Get();
+            var a = 5;
         }
 
         [TestMethod]
         public void ServersCount()
         {
-            Assert.AreEqual(result.Value.Count, 1);
+            Assert.AreEqual(serverControlResult.Value.Count, 1);
         }
 
         [TestMethod]
         public void ServerIDNotNull()
         {
-            Assert.IsNotNull(result.Value[0].ServerId);
+            Assert.IsNotNull(serverControlResult.Value[0].ServerId);
         }
 
         [TestMethod]
         public void ServersURLIsValid()
         {
-            Assert.AreEqual(result.Value[0].ServerURL, "helloworld.com");
+            Assert.AreEqual(serverControlResult.Value[0].ServerURL, "test.com");
         }
     }
 }
