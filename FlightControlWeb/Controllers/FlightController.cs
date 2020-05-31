@@ -4,9 +4,13 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 using System.Net.Http;
+using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace FlightControlWeb.Controllers
 {
@@ -68,7 +72,10 @@ namespace FlightControlWeb.Controllers
 
         async Task<HttpResponseMessage> GetServers()
         {
-            string url = "http://localhost:51271/api/servers";
+            var baseAddr = Request.Host.Value;
+
+            string url = "http://" + baseAddr + "/api/servers";
+
             HttpResponseMessage response = await client.GetAsync(url);
             return response;
         }

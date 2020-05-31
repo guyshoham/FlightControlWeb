@@ -436,7 +436,7 @@ function fetchFlightPlanById(id) {
     }
 
     //send GET request
-    fetch("http://localhost:51271/api/FlightPlan/" + id, getOptions)
+    fetch("/api/FlightPlan/" + id, getOptions)
         .then(response => response.json())
         .then(plan => showFlightDetails(plan))
         .then(plan => buildAndShowRoute(plan))
@@ -449,7 +449,7 @@ function fetchFlightsSyncAll() {
     }
     let now = new Date();
     //send GET request
-    fetch("http://localhost:51271/api/Flights?relative_to=" + now.toISOString() + "&sync_all", getOptions)
+    fetch("/api/Flights?relative_to=" + now.toISOString() + "&sync_all", getOptions)
         .then(response => response.json())
         .then(flight => addFlightsArrayToFlightList(flight))
         .then(checkSelectedPlan())
