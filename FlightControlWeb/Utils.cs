@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using FlightControlWeb.Models;
+﻿using FlightControlWeb.Models;
+using System;
 
 namespace FlightControlWeb
 {

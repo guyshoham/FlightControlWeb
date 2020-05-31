@@ -37,7 +37,7 @@ namespace FlightControlWeb
             {
                 app.UseDeveloperExceptionPage();
             }
-            
+
             app.UseStaticFiles();
 
             app.UseRouting();

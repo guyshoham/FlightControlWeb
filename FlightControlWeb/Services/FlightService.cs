@@ -63,7 +63,7 @@ namespace FlightControlWeb.Services
             return value;
         }
 
-      
+
 
         public static Flight GetFlight(FlightPlan plan, DateTime dateInput, bool isExternal)
         {
