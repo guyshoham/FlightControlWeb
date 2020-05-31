@@ -22,7 +22,7 @@ namespace FlightControlWeb.Controllers
         // POST api/servers
         [HttpPost]
         [Route("servers")]
-        public ActionResult<Server> Post(JsonElement json)
+        public ActionResult<Server> Post(object json)
         {
             Server serializedJson = JsonConvert.DeserializeObject<Server>(json.ToString());
             Server server = _service.AddServer(serializedJson);
@@ -54,7 +54,7 @@ namespace FlightControlWeb.Controllers
         // DELETE api/servers/{id}
         [HttpDelete]
         [Route("servers/{id}")]
-        public ActionResult<Flight> Delete(string id)
+        public ActionResult<Server> Delete(string id)
         {
             var server = _service.DeleteServerById(id);
 

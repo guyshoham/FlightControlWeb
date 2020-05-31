@@ -143,6 +143,10 @@ div.flightDetails {
         background-color: #4caf50; /* Green background color */
     }
 
+    #snackbar.info {
+        background-color: #17a2b8; /* Cyan background color */
+    }
+
 /* Animations to fade the snackbar in and out */
 @-webkit-keyframes fadein {
     from {

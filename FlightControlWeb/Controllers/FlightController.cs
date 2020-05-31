@@ -9,7 +9,6 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
-using System.Text.Json;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -30,12 +29,12 @@ namespace FlightControlWeb.Controllers
         // GET api/Flights?relative_to=<DATE_TIME>&sync_all (sync_all=OPTIONAL)
         [HttpGet]
         [Route("Flights")]
-        public async Task<ActionResult<string>> GetFlightsByTimeAsync([FromQuery] DateTime relative_to, [Optional] string sync_all)
+        public async Task<ActionResult<string>> GetFlightsByTimeAsync([FromQuery(Name = "relative_to")] DateTime relativeTo, [Optional] string sync_all)
         {
-            relative_to = relative_to.ToUniversalTime();
+            relativeTo = relativeTo.ToUniversalTime();
             List<Flight> allFlights = new List<Flight>();
             List<Flight> externalsFlights = new List<Flight>();
-            List<Flight> internalFlights = _service.GetAllFlightsRelativeToDate(relative_to);
+            List<Flight> internalFlights = _service.GetAllFlightsRelativeToDate(relativeTo);
 
             string request = Request.QueryString.Value;
             bool syncAll = request.Contains("sync_all");
@@ -47,7 +46,7 @@ namespace FlightControlWeb.Controllers
 
                 foreach (Server server in servers)
                 {
-                    var flightsResponse = await GetFlightsFromAnotherServer(server.ServerURL, relative_to);
+                    var flightsResponse = await GetFlightsFromAnotherServer(server.ServerURL, relativeTo);
                     var flightsBody = flightsResponse.Content.ReadAsStringAsync().Result;
                     List<Flight> externals_one_server = JsonConvert.DeserializeObject<List<Flight>>(flightsBody); // get list of all flights from one external server
                     externalsFlights.AddRange(externals_one_server); // unite this list with all external flights list
