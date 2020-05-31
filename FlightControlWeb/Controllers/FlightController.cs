@@ -4,13 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace FlightControlWeb.Controllers
 {
@@ -31,7 +28,6 @@ namespace FlightControlWeb.Controllers
         [Route("Flights")]
         public async Task<ActionResult<string>> GetFlightsByTimeAsync([FromQuery(Name = "relative_to")] DateTime relativeTo, [Optional] string sync_all)
         {
-            relativeTo = relativeTo.ToUniversalTime();
             List<Flight> allFlights = new List<Flight>();
             List<Flight> externalsFlights = new List<Flight>();
             List<Flight> internalFlights = _service.GetAllFlightsRelativeToDate(relativeTo);
@@ -47,9 +43,18 @@ namespace FlightControlWeb.Controllers
                 foreach (Server server in servers)
                 {
                     var flightsResponse = await GetFlightsFromAnotherServer(server.ServerURL, relativeTo);
-                    var flightsBody = flightsResponse.Content.ReadAsStringAsync().Result;
-                    List<Flight> externals_one_server = JsonConvert.DeserializeObject<List<Flight>>(flightsBody); // get list of all flights from one external server
-                    externalsFlights.AddRange(externals_one_server); // unite this list with all external flights list
+                    if (flightsResponse.StatusCode == HttpStatusCode.OK)
+                    {
+                        var flightsBody = flightsResponse.Content.ReadAsStringAsync().Result;
+                        List<Flight> externals_one_server = JsonConvert.DeserializeObject<List<Flight>>(flightsBody); // get list of all flights from one external server
+
+                        foreach (Flight flight in externals_one_server)
+                        {
+                            flight.From = server.ServerURL;
+                        }
+
+                        externalsFlights.AddRange(externals_one_server); // unite this list with all external flights list
+                    }
                 }
 
                 //change all external flights to isExternal=true

@@ -101,7 +101,8 @@ namespace FlightControlWeb.Services
                         Passengers = plan.Passengers,
                         CompanyName = plan.CompanyName,
                         DateTime = dateInput,
-                        IsExternal = isExternal
+                        IsExternal = isExternal,
+                        From = ""
                     };
                     return flight;
                 }

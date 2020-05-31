@@ -88,19 +88,24 @@ function buildAndShowRoute(flightPlan) {
     let flightPlanCoordinates = [];
 
     //add initial location landmark
+
+    let initLocation = flightPlan.initial_location || flightPlan.initialLocation;
+
     let init = {
-        lat: flightPlan.initialLocation.latitude,
-        lng: flightPlan.initialLocation.longitude
+        lat: Number(initLocation.latitude),
+        lng: Number(initLocation.longitude)
     };
 
     //push init location to arr
     flightPlanCoordinates.push(init);
 
+    let segments = flightPlan.segments || flightPlan.Segments;
+
     //add all segments landmarks
-    for (let i = 0; i < flightPlan.segments.length; i++) {
+    for (let i = 0; i < segments.length; i++) {
         let landMark = {
-            lat: flightPlan.segments[i].latitude,
-            lng: flightPlan.segments[i].longitude
+            lat: Number(segments[i].latitude),
+            lng: Number(segments[i].longitude)
         };
 
         flightPlanCoordinates.push(landMark);
@@ -140,8 +145,7 @@ function appendFlightToList(flight) {
     item.id = flight.flight_id;
     item.className = "list-group-item list-group-item-action list-group-hover";
     item.onclick = function () { flightClicked(item.id); };
-    item.setAttribute("data-lat", flight.latitude);
-    item.setAttribute("data-lng", flight.longitude);
+    item.setAttribute("from", flight.from);
 
     if (!flight.is_external) {
         //generate the inner content of the item
@@ -201,13 +205,13 @@ function addFlightsArrayToFlightList(array) {
     }
 }
 
-function showSnackbar(error, type) {
+function showSnackbar(msg, type) {
     // Get the snackbar DIV
     let x = document.getElementById("snackbar");
 
     // Add the "show" class to DIV
     x.className = "show";
-    x.textContent = error || "No Message Input";
+    x.textContent = msg || "No Message Input";
 
     type = type || "error";
 
@@ -226,7 +230,7 @@ function showSnackbar(error, type) {
         x.className = x.className.replace("success", "");
     }, 7000);
 
-    return error;
+    return msg;
 }
 
 function showFlightDetails(flightPlan) {
@@ -243,17 +247,16 @@ function showFlightDetails(flightPlan) {
         startPoint.textContent = "";
         endPoint.textContent = "";
     } else {
-        let segmentsLength = flightPlan.segments.length;
-        title.textContent = "Flight ID: " + flightPlan.flightId;
-        company.textContent = "Company: " + flightPlan.companyName;
+        let segnments = flightPlan.segments || flightPlan.Segments;
+        let segmentsLength = segnments.length || segnments.length;
+        let initialLocation = flightPlan.initial_location || flightPlan.initialLocation;
+        title.textContent = "Flight ID: " + selectedFlightPlanId;
+        company.textContent = "Company: " + (flightPlan.company_name || flightPlan.companyName);
         passengers.textContent = "Passengers: " + flightPlan.passengers;
-        startPoint.textContent = "Start: " +
-            flightPlan.initialLocation.latitude + "," +
-            flightPlan.initialLocation.longitude;
-
+        startPoint.textContent = "Start: " + initialLocation.latitude + "," + initialLocation.longitude;
         endPoint.textContent = "End: " +
-            flightPlan.segments[segmentsLength - 1].latitude + "," +
-            flightPlan.segments[segmentsLength - 1].longitude;
+            (segnments[segmentsLength - 1].latitude) + "," +
+            (segnments[segmentsLength - 1].longitude);
     }
 
     return flightPlan;
@@ -430,14 +433,19 @@ function removeFlight(flightId) {
         .catch(error => console.log(error))
 }
 
-function fetchFlightPlanById(id) {
-    let getOptions = {
-        "method": "GET"
-    }
+async function fetchFlightPlanById(id) {
+    let getOptions = { "method": "GET" }
+
+    let item = document.getElementById(id);
+    let url = item.getAttribute("from");
 
     //send GET request
-    fetch("/api/FlightPlan/" + id, getOptions)
-        .then(response => response.json())
+    fetch(url + "/api/FlightPlan/" + id, getOptions)
+        .then(response => {
+            if (response.status === 200) {
+                return response.json();
+            }
+        })
         .then(plan => showFlightDetails(plan))
         .then(plan => buildAndShowRoute(plan))
         .catch(error => showSnackbar(error))
