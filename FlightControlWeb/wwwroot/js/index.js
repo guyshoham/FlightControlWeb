@@ -410,6 +410,66 @@ function flightClicked(id) {
 
 
 //API requests
+function fetchFlightsSyncAll() {
+    //console.log("fetchFlightsSyncAll");
+
+    let getOptions = {
+        "method": "GET"
+    }
+    let now = new Date();
+    //send GET request
+    fetch("/api/Flights?relative_to=" + now.toISOString() + "&sync_all", getOptions)
+        .then(response => response.json())
+        .then(flight => addFlightsArrayToFlightList(flight))
+        .then(checkSelectedPlan())
+        .catch(error => showSnackbar(error))
+}
+
+async function fetchFlightPlanById(id) {
+    console.log("fetchFlightPlanById: " + id);
+
+    let getOptions = { "method": "GET" }
+
+    let item = document.getElementById(id);
+    let url = item.getAttribute("from");
+
+    //send GET request
+    fetch(url + "/api/FlightPlan/" + id, getOptions)
+        .then(response => {
+            if (response.status === 200) {
+                return response.json();
+            }
+        })
+        .then(plan => showFlightDetails(plan))
+        .then(plan => buildAndShowRoute(plan))
+        .catch(error => showSnackbar(error))
+}
+
+function removeFlight(flightId) {
+    console.log("removeFlight: " + flightId);
+
+    if (flightId === selectedFlightPlanId) {
+        setNotActive(selectedFlightPlanId);
+        showFlightDetails(null);
+    }
+
+    removeMarkerById(flightId);
+
+    //create DELETE request
+    let deleteOptions = {
+        "method": "DELETE",
+    };
+
+    //send DELETE request
+    fetch("/api/Flights/" + flightId, deleteOptions)
+        .then(response => response.json())
+        .then(showSnackbar("FlightPlan " + flightId + " Deleted Successfully!", "success"))
+        .then(document.getElementById(flightId).remove())
+        .catch(error => console.log(error))
+}
+
+
+//function for test buttons
 function postFlight() {
     console.log("postFlight");
 
@@ -447,64 +507,6 @@ function postFlight() {
         .catch(error => showSnackbar(error))
 
 
-}
-
-function removeFlight(flightId) {
-    console.log("removeFlight: " + flightId);
-
-    if (flightId === selectedFlightPlanId) {
-        setNotActive(selectedFlightPlanId);
-        showFlightDetails(null);
-    }
-
-    removeMarkerById(flightId);
-
-    //create DELETE request
-    let deleteOptions = {
-        "method": "DELETE",
-    };
-
-    //send DELETE request
-    fetch("/api/Flights/" + flightId, deleteOptions)
-        .then(response => response.json())
-        .then(showSnackbar("FlightPlan " + flightId + " Deleted Successfully!", "success"))
-        .then(document.getElementById(flightId).remove())
-        .catch(error => console.log(error))
-}
-
-async function fetchFlightPlanById(id) {
-    console.log("fetchFlightPlanById: " + id);
-
-    let getOptions = { "method": "GET" }
-
-    let item = document.getElementById(id);
-    let url = item.getAttribute("from");
-
-    //send GET request
-    fetch(url + "/api/FlightPlan/" + id, getOptions)
-        .then(response => {
-            if (response.status === 200) {
-                return response.json();
-            }
-        })
-        .then(plan => showFlightDetails(plan))
-        .then(plan => buildAndShowRoute(plan))
-        .catch(error => showSnackbar(error))
-}
-
-function fetchFlightsSyncAll() {
-    //console.log("fetchFlightsSyncAll");
-
-    let getOptions = {
-        "method": "GET"
-    }
-    let now = new Date();
-    //send GET request
-    fetch("/api/Flights?relative_to=" + now.toISOString() + "&sync_all", getOptions)
-        .then(response => response.json())
-        .then(flight => addFlightsArrayToFlightList(flight))
-        .then(checkSelectedPlan())
-        .catch(error => showSnackbar(error))
 }
 
 function preparePost(flight) {
