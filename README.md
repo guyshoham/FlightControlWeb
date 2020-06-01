@@ -1,4 +1,4 @@
-# FlightControlWeb
+# FlightControlWeb :airplane:
 
 
 An air control system, which monitor active flights and enable new flight plans to be entered.
@@ -8,11 +8,11 @@ into our system as well as other flights entered into external air control syste
 
 ### Objectives:
 
-* Using **ASP.NET Core 3.1** to create a modern Web application.
-* Creating **REST API** using WebAPI
-* Client design based on **bootstrap** and **css** principles
-* **JavaScript** client-side app based on **ES8** 
-* **Unit tests** and Dependency Injection.
+* Using **ASP.NET Core 3.1** to create a modern Web application. :white_check_mark:
+* Creating **REST API** using WebAPI :white_check_mark:
+* Client design based on **bootstrap** and **css** principles :white_check_mark:
+* **JavaScript** client-side app based on **ES8** :white_check_mark:
+* **Unit tests** and Dependency Injection :white_check_mark:
 
 ### API Routes:
 
