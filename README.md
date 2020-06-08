@@ -14,7 +14,7 @@ into our system as well as other flights entered into external air control syste
 * **JavaScript** client-side app based on **ES8** :white_check_mark:
 * **Unit tests** and Dependency Injection :white_check_mark:
 
-### API Routes:
+### API Endpoints:
 
    
    | ACTION |                       PATH                    | DESCRIPTION  |
